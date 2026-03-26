@@ -25,7 +25,7 @@ import (
 const (
 	ListenAddr = "127.0.0.1:10086"             // 本地监听地址与端口
 	DllPath    = "./libs/WinDataCollect64.dll" // 目标 DLL 文件路径
-	StaticDir  = "./static"                    // 静态网页资源存放目录
+	StaticDir  = "./docs"                    // 静态网页资源存放目录
 )
 
 var (
