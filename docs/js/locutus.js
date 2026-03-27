@@ -954,8 +954,18 @@ function logger(...args) {
 		return Libbcmath;
 	}
 
+	function isBcLibrary(value) {
+		return typeof value === 'object' && value !== null && 'bc_add' in value && 'scale' in value;
+	}
+
 	function _bc() {
-		return createBcLibrary();
+		const existing = getPhpRuntimeEntry('bcMathLib');
+		if (isBcLibrary(existing)) {
+			return existing;
+		}
+		const library = createBcLibrary();
+		setPhpRuntimeEntry('bcMathLib', library);
+		return library;
 	}
 
 	function resolvePhpCallable(callback, options) {
@@ -3760,6 +3770,10 @@ function logger(...args) {
 
 	function bcscale(scale) {
 		const libbcmath = _bc();
+		const oldScale = libbcmath.scale;
+		if (scale == null) {
+			return oldScale;
+		}
 		const parsedScale = Number.parseInt(String(scale), 10);
 		if (Number.isNaN(parsedScale)) {
 			return false;
@@ -3768,7 +3782,7 @@ function logger(...args) {
 			return false;
 		}
 		libbcmath.scale = parsedScale;
-		return true;
+		return oldScale;
 	}
 
 	function bcsub(leftOperand, rightOperand, scale) {
@@ -8117,6 +8131,11 @@ function logger(...args) {
 		}
 		return code;
 	}
+	const DANGEROUS_PARSE_STR_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
+	function isDangerousParseStrKey(key) {
+		return DANGEROUS_PARSE_STR_KEYS.has(key);
+	}
 
 	function parse_str(str, array) {
 		const strArr = String(str).replace(/^&/, '').replace(/&$/, '').split('&');
@@ -8141,9 +8160,6 @@ function logger(...args) {
 			tmp = (strArr[i] ?? '').split('=');
 			key = _fixStr(tmp[0] ?? '');
 			value = tmp.length < 2 ? '' : _fixStr(tmp[1] ?? '');
-			if (/__proto__|constructor|prototype/.test(key)) {
-				break;
-			}
 			while (key.charAt(0) === ' ') {
 				key = key.slice(1);
 			}
@@ -8184,7 +8200,19 @@ function logger(...args) {
 					}
 				}
 				keys[0] = primaryKey;
+				let hasDangerousKey = false;
+				for (const rawKey of keys) {
+					const normalizedKey = rawKey.replace(/^['"]/, '').replace(/['"]$/, '');
+					if (isDangerousParseStrKey(normalizedKey)) {
+						hasDangerousKey = true;
+						break;
+					}
+				}
+				if (hasDangerousKey) {
+					continue;
+				}
 				obj = target;
+				let skipAssignment = false;
 				for (j = 0, keysLen = keys.length; j < keysLen; j++) {
 					key = (keys[j] ?? '').replace(/^['"]/, '').replace(/['"]$/, '');
 					lastObj = obj;
@@ -8197,6 +8225,10 @@ function logger(...args) {
 						}
 						key = String(ct + 1);
 					}
+					if (isDangerousParseStrKey(key)) {
+						skipAssignment = true;
+						break;
+					}
 					const current = obj[key];
 					if (!isPhpAssocObject(current)) {
 						obj[key] = {};
@@ -8206,6 +8238,9 @@ function logger(...args) {
 						break;
 					}
 					obj = next;
+				}
+				if (skipAssignment || isDangerousParseStrKey(key)) {
+					continue;
 				}
 				lastObj[key] = value;
 			}

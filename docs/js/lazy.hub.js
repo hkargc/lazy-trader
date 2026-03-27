@@ -1172,12 +1172,14 @@ function LazyHub() {
 			o.trade = o.trdEnv ? 1 : 92; //1富途的websocket服务;92自建前端仿真;
 			o.tmode = o.trdEnv ? 0 : 2; //富途推送完善的逐笔和十档摆盘
 			switch (c) {
-				case 'MHI': //小恒指
+				case 'MHI':{ //小恒指
 					o.owner_code = '800000';
 					break;
-				case 'HSI': //恒指期货
+				}
+				case 'HSI':{ //恒指期货
 					o.owner_code = '800000';
 					break;
+				}
 			}
 			if (in_array(c, ['MNQ', 'MYM'])) { //默认是港期,美期要手动指定
 				o.qotMarket = 11; //11美国市场
@@ -1222,12 +1224,14 @@ function LazyHub() {
 			o.tmode = o.trdEnv ? 0 : 2;
 			if (o.trdEnv) { //行情用天勤,交易用富途,这里必须手动更改[延时行情,这里仅演示]
 				switch (o.main_code) {
-					case 'KQD.m@CME.MNQ': //微型纳指
+					case 'KQD.m@CME.MNQ':{ //微型纳指
 						o.origin_code = 'MNQ2603'; //用富途交易
 						break;
-					case 'KQD.m@CBOT.MYM': //微型道指
+					}
+					case 'KQD.m@CBOT.MYM':{ //微型道指
 						o.origin_code = 'MYM2603'; //用富途交易
 						break;
+					}
 				}
 			}
 			return o;
