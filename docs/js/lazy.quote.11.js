@@ -1068,7 +1068,7 @@ _this.task[3103] = function(m) {
 			'retMsg': '不支持的周期!'
 		});
 	}
-	if (in_array(klType, [1]) && (endTime <= mktime(0, 0, 0))) { //免费版支持一年内的一分K
+	if (in_array(klType, [1]) && empty(Q.isAnonymous) && (endTime <= mktime(0, 0, 0))) { //免费版支持一年内的一分K https://doc.shinnytech.com/edb/latest/index.html
 		return _this.fetch(config.quote[11]["tqsdk_proxy"], {
 			method: "POST",
 			headers: {
