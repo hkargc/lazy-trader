@@ -10,21 +10,6 @@
 			//top.location.href = self.location.href;  
 		}
 	</script>
-	<style>
-		body {
-			-webkit-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
-			overflow-x: hidden;
-			overflow-y: hidden;
-			padding: 0;
-			margin: 0;
-		}
-
-		.anychart-plot-controls {
-			visibility: hidden;
-		}
-	</style>
 	<script src="./js/jquery-4.0.0.min.js"></script>
 	<script src="./js/jquery-ui/jquery-ui.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="./js/jquery-ui/jquery-ui.min.css">
@@ -52,6 +37,23 @@
 		document.write('\x3Cscript src="./js/lazy-trader.js?_=' + Math.random() + '">\x3C/script>');
 	</script>
 	<link rel="stylesheet" type="text/css" href="./styles/lazy-trader.css">
+	<style>
+		body {
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			overflow-x: hidden;
+			overflow-y: hidden;
+			padding: 0;
+			margin: 0;
+		}
+		.anychart-loader {
+			z-index: 100 !important;
+		}
+		.anychart-plot-controls {
+			visibility: hidden;
+		}
+	</style>
 	<link rel="shortcut icon" href="./favicon.ico">
 </head>
 

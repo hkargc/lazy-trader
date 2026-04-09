@@ -381,7 +381,7 @@ function do_stock(code) {
 			if (msg['secType'] != 3) {
 				continue;
 			}
-			_this.post({
+			_this.post({ //模拟后端推送消息
 				proto: 1003,
 				serialNo: 0
 			}, {
@@ -389,7 +389,12 @@ function do_stock(code) {
 					type: -2,
 					event: {
 						eventType: -2,
-						desc: msg['msg']
+						desc: json_encode({
+							"desc": msg['msg'],
+							"news": [],
+							"gaps": [],
+							"events": []
+						})
 					}
 				}
 			});

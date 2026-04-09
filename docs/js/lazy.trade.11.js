@@ -456,7 +456,7 @@ _this._open = function() {
 				let a = NEW["notify"][k];
 				delete NEW["notify"][k];
 				logger(json_encode(a));
-				in_array(a.level, ['INFO']) || _this.post({
+				_this.post({ //模拟后端推送消息
 					proto: 1003,
 					serialNo: 0
 				}, {
@@ -464,7 +464,12 @@ _this._open = function() {
 						type: -2,
 						event: {
 							eventType: -2,
-							desc: a['content']
+							desc: json_encode({
+								"desc": a['content'],
+								"news": [],
+								"gaps": [],
+								"events": []
+							})
 						}
 					}
 				});

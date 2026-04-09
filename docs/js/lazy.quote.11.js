@@ -395,8 +395,8 @@ _this._open = function() {
 			for (let k in _this.NEW["notify"]) {
 				let a = _this.NEW["notify"][k];
 				delete _this.NEW["notify"][k];
-				//logger(json_encode(a));
-				in_array(a.level, ['INFO']) || _this.post({
+				logger(json_encode(a));
+				_this.post({ //模拟后端推送消息
 					proto: 1003,
 					serialNo: 0
 				}, {
@@ -404,7 +404,12 @@ _this._open = function() {
 						type: in_array(a.level, ['SYSTEM']) ? -1 : -2,
 						event: {
 							eventType: in_array(a.level, ['SYSTEM']) ? -1 : -2,
-							desc: a['content']
+							desc: json_encode({
+								"desc": a['content'],
+								"news": [],
+								"gaps": [],
+								"events": []
+							})
 						}
 					}
 				});
@@ -520,9 +525,10 @@ _this._open = function() {
 									event: {
 										eventType: -1,
 										desc: json_encode({
+											"desc": "",
 											"news": [],
 											"gaps": [],
-											"events": [] //重大事件
+											"events": []
 										})
 									}
 								}
@@ -709,9 +715,10 @@ _this.task[1004] = function(m) {
 			event: {
 				eventType: -1,
 				desc: json_encode({
+					"desc": "",
 					"news": [],
 					"gaps": [],
-					"events": [] //重大事件
+					"events": []
 				})
 			}
 		}

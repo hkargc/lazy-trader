@@ -1053,9 +1053,12 @@ task[1004] = function(s2c) { //保活心跳
 	}
 };
 task[1003] = function(s2c) { //系统通知
-	if (empty(s2c.wk)) {}
+	if (empty(s2c.wk)) {
+		
+	}
 	if (s2c.type == -2) {
-		return alert('[后端推送]信息:' + s2c.event.desc);
+		let data = json_decode(s2c.event.desc);
+		return alert('[后端推送]信息:' + data["desc"]);
 	}
 	if ((s2c.type == -1) && in_array(O.pmode, [1])) { //资讯及重大事件
 		let gz = new Array();
