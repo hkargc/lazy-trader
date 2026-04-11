@@ -1260,18 +1260,19 @@ function PlaceOrder(trdSide, force) {
 		return false;
 	}
 	let price = 0;
+	let step = array_first(Q['props']["fill"]); //买入时比报价低几个档:挂买一单/买二单/...
 	if (trdSide == 1) { //买入
 		if (force) { //强买
-			price = gear_up(Q['curPrice'], 1, Q['code']); //比市价高一档
+			price = gear_up(Q['curPrice'], step, Q['code']); //比市价高N档:最坏的情况下会高吃N档!!!卖盘密集的情况下是优先低价成交
 		} else {
-			price = gear_down(Q['curPrice'], array_first(Q['props']["fill"]), Q['code']); //比市价低特定价位
+			price = gear_down(Q['curPrice'], step, Q['code']); //比市价低N档
 		}
 	}
 	if (trdSide == 3) { //沽入
 		if (force) { //强沽
-			price = gear_down(Q['curPrice'], 1, Q['code']); //比市价低一档
+			price = gear_down(Q['curPrice'], step, Q['code']); //比市价低N档:最坏的情况下...
 		} else {
-			price = gear_up(Q['curPrice'], array_first(Q['props']["fill"]), Q['code']);
+			price = gear_up(Q['curPrice'], step, Q['code']);
 		}
 	}
 	if (empty(price)) {
@@ -1286,7 +1287,7 @@ function PlaceOrder(trdSide, force) {
 				lazy.Trd_ModifyOrder(o["orderIDEx"], 1, o['code'], o['trdSide'], o["qty"], price, o['remark']);
 			}
 			if (force && in_array(o.orderStatus, [22])) { //强买强沽强制生效
-				lazy.Trd_ModifyOrder(o["orderIDEx"], 4, o['code'], o['trdSide'], o['qty'], o['price'], o['remark']);
+				lazy.Trd_ModifyOrder(o["orderIDEx"], 4, o['code'], o['trdSide'], o['qty'], price, o['remark']);
 			}
 			return true;
 		}
@@ -1297,7 +1298,7 @@ function PlaceOrder(trdSide, force) {
 	lazy.Trd_PlaceOrder(Q['origin_code'], trdSide, qty, price, '', force || G.ctrlKey); //最后的倔强:如果按住了CTRL键则下生效单
 }
 /**
- * 划线修改订单:撤单/失效/生效.供图表交易按钮调用
+ * 划线修改订单:撤单/失效/生效.供图表交易按钮调用.
  * @param {type} modifyOrderOp
  * @returns {Boolean}
  */

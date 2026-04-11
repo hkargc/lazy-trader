@@ -404,7 +404,7 @@ _this._open = function() {
 						type: in_array(a.level, ['SYSTEM']) ? -1 : -2,
 						event: {
 							eventType: in_array(a.level, ['SYSTEM']) ? -1 : -2,
-							desc: json_encode({
+							desc: in_array(a.level, ['SYSTEM']) ? a['content'] : json_encode({
 								"desc": a['content'],
 								"news": [],
 								"gaps": [],
