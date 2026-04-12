@@ -551,7 +551,7 @@ function fees(price, code) {
  * @returns {Number}
  */
 function gear_up(p, step, code) {
-	p *= 1000;
+	p = +bcmul(p, 1000, 0); //高精度算术由locutus.js实现
 	outter: for (; step >= 0; step--) {
 		if (p < Gear[0][0]) {
 			break;
@@ -578,7 +578,7 @@ function gear_up(p, step, code) {
 			}
 		}
 	}
-	p = sprintf('%.3f', p / 1000) * 1;
+	p = +bcdiv(p, 1000, 3);
 	if (empty(lazy)) {
 		return p;
 	}
@@ -601,7 +601,7 @@ function gear_up(p, step, code) {
  * @returns {Number}
  */
 function gear_down(p, step, code) {
-	p *= 1000;
+	p = +bcmul(p, 1000, 0);
 	outter: for (; step >= 0; step--) {
 		if (p < Gear[0][0]) {
 			break;
@@ -630,7 +630,7 @@ function gear_down(p, step, code) {
 			}
 		}
 	}
-	p = sprintf('%.3f', p / 1000) * 1;
+	p = +bcdiv(p, 1000, 3);
 	if (empty(lazy)) {
 		return p;
 	}
@@ -973,10 +973,10 @@ function trd_getinfo() {
 				return $("#buy_name").text('不支持该方式!');
 			}
 			if (empty(_o.askPrice)) { //计算买一卖一
-				_o.askPrice = max(gear_up(_o.bidPrice, 1, _o.code), _o.curPrice);
+				_o.askPrice = max(gear_up(_o.bidPrice ?? _o.curPrice, 1, _o.code), _o.curPrice);
 			}
 			if (empty(_o.bidPrice)) {
-				_o.bidPrice = min(gear_down(_o.askPrice, 1, _o.code), _o.curPrice);
+				_o.bidPrice = min(gear_down(_o.askPrice ?? _o.curPrice, 1, _o.code), _o.curPrice);
 			}
 			$("#buy_code").val(_o.code);
 			$("#buy_name").text(_o.name);
