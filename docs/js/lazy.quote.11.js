@@ -49,7 +49,7 @@ function get_headers() {
 	return {
 		"Authorization": "Bearer " + Q.access_token,
 		"Accept": "application/json",
-		"User-Agent": "tqsdk-python 3.9.1"
+		"User-Agent": "tqsdk-python 3.9.3"
 	};
 }
 /**
