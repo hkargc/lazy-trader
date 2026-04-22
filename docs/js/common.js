@@ -1329,7 +1329,7 @@ function ModifyOrder(modifyOrderOp, id) {
 		ids.push(o.id);
 	}
 	let count = G.ctrl.getAnnotationsCount();
-	for (let index = 0; index < count; index++) {
+	for (let index = count - 1; index >= 0; index--) {
 		if (empty(forAll)) { //改单个
 			break;
 		}
@@ -1520,7 +1520,7 @@ function getAnnotations() {
 	}
 	let list = [];
 	let count = G.ctrl.getAnnotationsCount();
-	for (let index = 0; index < count; index++) {
+	for (let index = count - 1; index >= 0; index--) {
 		let annotation = G.ctrl.getAnnotationAt(index);
 		if (empty(annotation)) {
 			continue;
@@ -1659,7 +1659,8 @@ function redoRemark(remark) {
 	if (empty(window.chart)) {
 		return true;
 	}
-	for (let index = G.ctrl.getAnnotationsCount() - 1; index >= 0; index--) {
+	let count = G.ctrl.getAnnotationsCount();
+	for (let index = count - 1; index >= 0; index--) {
 		let annotation = G.ctrl.getAnnotationAt(index);
 		if (empty(annotation)) {
 			continue;
@@ -1677,7 +1678,7 @@ function redoRemark(remark) {
 		if (G.orders[zIndex].remark == remark) {
 			continue;
 		}
-		annotation.valueAnchor(remark); //改变属性后可能index会变?这里可能会出问题
+		annotation.valueAnchor(remark);
 		G.orders[zIndex].remark = remark;
 	}
 }
@@ -1699,7 +1700,7 @@ function calcPrice(price, trdSide) {
 	let h = Number.MIN_SAFE_INTEGER; //这些订单最高价
 	let l = Number.MAX_SAFE_INTEGER; //最低价
 	let count = G.ctrl.getAnnotationsCount();
-	for (let index = 0; index < count; index++) {
+	for (let index = count - 1; index >= 0; index--) {
 		let annotation = G.ctrl.getAnnotationAt(index);
 		if (empty(annotation)) {
 			continue;
@@ -2338,7 +2339,7 @@ function saveLine() {
 	}
 	let list = [];
 	let count = G.ctrl.getAnnotationsCount();
-	for (let index = 0; index < count; index++) {
+	for (let index = count - 1; index >= 0; index--) {
 		let annotation = G.ctrl.getAnnotationAt(index);
 		if (empty(annotation)) {
 			continue;
@@ -2371,11 +2372,10 @@ function removeLine(forAll) {
 	if (empty(window.chart)) {
 		return true;
 	}
-	const list = [];
-	const count = G.ctrl.getAnnotationsCount();
-	const selected = G.ctrl.getSelectedAnnotation();
-	for (let index = 0; index < count; index++) {
-		const annotation = G.ctrl.getAnnotationAt(index);
+	let count = G.ctrl.getAnnotationsCount();
+	let selected = G.ctrl.getSelectedAnnotation();
+	for (let index = count - 1; index >= 0; index--) {
+		let annotation = G.ctrl.getAnnotationAt(index);
 		if (empty(annotation)) {
 			continue;
 		}
@@ -2386,11 +2386,8 @@ function removeLine(forAll) {
 			continue;
 		}
 		if (forAll || (selected === annotation)) {
-			list.push(annotation);
+			G.ctrl.removeAnnotation(annotation);
 		}
-	}
-	for (let annotation of list) {
-		G.ctrl.removeAnnotation(annotation);
 	}
 	saveLine();
 }
