@@ -147,19 +147,15 @@ task[3219] = function(s2c) { //交易日期
 		});
 	}
 	O.date = trades[O.day]; //该交易日的零点
-	let beginTimes = { //trades是倒序的
-		1: trades[O.day + 1] + 9 * 60 * 60, //一分K,此处需确保多于prefs.cpoints条,昨天9点到明天9点
-		2: trades[O.day + ceil((prefs.cpoints + 60) / 1)], //日K,每天一根,多取60根
-		6: trades[O.day + ceil((prefs.cpoints + 60) / 60)], //五分K,每天算60根
-		7: trades[O.day + ceil((prefs.cpoints + 60) / 20)], //15分K
-		8: trades[O.day + ceil((prefs.cpoints + 60) / 10)], //30分K
-		9: trades[O.day + ceil((prefs.cpoints + 60) / 5)], //小时K
-		10: trades[O.day + ceil((prefs.cpoints + 60) / 100)] //三分K
-	};
-	if (empty(beginTimes[O.klType])) {
-		return alert("无此K线类型!");
+	
+	let kn = 4 * 60; //kline number 每天交易时长算4小时,合计产生240根分钟K
+	let pn = array_last(KL2SUB[O.klType]); //该K线类型对应的时间周期(分钟)
+	if(pn > kn){ //如果是4小时以上的周期,按跨天计算
+		pn /= (24 * 60 / kn);
 	}
-	lazy.Qot_RequestHistoryKL(O.code, O.klType, beginTimes[O.klType], O.date + 33 * 60 * 60, 0, '', [], 1, 0); //第三步:获取K线
+	let dn =  ceil((prefs.cpoints + 60) * pn / kn); //多取60根以便计算均线
+	
+	lazy.Qot_RequestHistoryKL(O.code, O.klType, trades[O.day + dn], O.date + 33 * 60 * 60, 0, '', [], 1, 0); //第三步:获取K线
 };
 task[3103] = function(s2c) { //历史K线,这里用的是O.code,实时K线用origin_code,两个拼起来
 	if (is_array(window.klines)) { //已经初始化过

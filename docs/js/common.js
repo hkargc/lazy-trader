@@ -150,7 +150,7 @@ $GLOBALS.Gear = [
 	[5000000, 99995000, 5000] //>=5000 && <99995
 ];
 /**
- * K线类型对应的订阅类型 [富途的订阅类型, K线名称, 天勤的订阅周期(单位为分钟)]
+ * K线类型对应的订阅类型 [富途的订阅类型, K线名称, 周期(单位为分钟)]
  * 天勤支持日内任意周期,可以按需修改此数组
  * @type type
  */
@@ -164,8 +164,12 @@ $GLOBALS.KL2SUB = {
 	7: [8, '15分K', 15], //15分K
 	8: [9, '30分K', 30], //30分K
 	9: [10, '小时K', 60], //小时K
-	10: [17, '三分K', 3] //三分K
+	10: [17, '三分K', 3], //三分K
 	//11: [15, '季度K', 90 * 24 * 60] //季度K
+	12: [18, '十分K', 10], //十分K
+	13: [19, '两小时K', 2 * 60], //两小时K
+	14: [20, '三小时K', 3 * 60], //三小时K
+	15: [21, '四小时K', 4 * 60] //四小时K
 };
 /**
  * 订单状态
@@ -1845,27 +1849,16 @@ function kchart(klines) {
 	if (empty(window.anychart)) {
 		return true;
 	}
-	window.chart = anychart.stock(true);
-	anychart.format.locales = {
-		'default': anychart.format.locales['default'],
-		'customOutputLocale': {
-			dateTimeLocale: {
-				formats: {
-					full_year_day: "yyyy-MM-dd",
-					full_year_minute: "yyyy-MM-dd HH:mm",
-					hour: "HH:mm",
-					year_hour: "yyyy-MM-dd HH:mm",
-					year_semester: "yyyy年MM月",
-					semester_quarter: "MM月"
-				}
-			}
-		}
-	};
+	
 	anychart.format.outputTimezone(-480);
-	anychart.format.outputLocale("customOutputLocale");
-	anychart.format.outputDateFormat('HH:mm');
-	//anychart.format.outputTimeFormat('yyyy-MM-dd');
-	//anychart.format.outputDateTimeFormat("yyyy-MM-dd");
+	
+	let formats = anychart.format.locales['default'].dateTimeLocale.formats;
+	formats.full_year_minute = "yyyy-MM-dd HH:mm";
+	formats.full_year_hour = "yyyy-MM-dd HH:mm";
+	formats.full_year_day = "yyyy-MM-dd";
+	
+	window.chart = anychart.stock(true);
+
 	let stage = anychart.graphics.create('k-container');
 	$("#k-container").find("div[id]").hide();
 	window.table = anychart.data.table(0);

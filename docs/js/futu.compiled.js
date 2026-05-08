@@ -35,7 +35,7 @@
             function PacketID(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -52,9 +52,13 @@
                 return w;
             };
     
-            PacketID.decode = function decode(r, l, e) {
+            PacketID.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Common.PacketID();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -70,7 +74,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -122,7 +126,7 @@
             function ProgramStatus(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -139,9 +143,13 @@
                 return w;
             };
     
-            ProgramStatus.decode = function decode(r, l, e) {
+            ProgramStatus.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Common.ProgramStatus();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -157,7 +165,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -189,7 +197,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -203,9 +211,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.GetGlobalState.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -217,7 +229,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -232,7 +244,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -297,9 +309,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.GetGlobalState.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -363,7 +379,7 @@
                             break;
                         }
                     case 12: {
-                            m.programStatus = $root.Common.ProgramStatus.decode(r, r.uint32());
+                            m.programStatus = $root.Common.ProgramStatus.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 13: {
@@ -379,7 +395,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -394,7 +410,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -408,9 +424,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.GetGlobalState.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -418,11 +438,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.GetGlobalState.C2S.decode(r, r.uint32());
+                            m.c2s = $root.GetGlobalState.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -437,7 +457,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -460,9 +480,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.GetGlobalState.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -482,11 +506,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.GetGlobalState.S2C.decode(r, r.uint32());
+                            m.s2c = $root.GetGlobalState.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -508,7 +532,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -537,9 +561,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.InitConnect.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -571,7 +599,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -586,7 +614,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -618,9 +646,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.InitConnect.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -656,7 +688,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -671,7 +703,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -685,9 +717,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.InitConnect.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -695,11 +731,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.InitConnect.C2S.decode(r, r.uint32());
+                            m.c2s = $root.InitConnect.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -714,7 +750,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -737,9 +773,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.InitConnect.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -759,11 +799,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.InitConnect.S2C.decode(r, r.uint32());
+                            m.s2c = $root.InitConnect.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -785,7 +825,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -814,9 +854,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.InitWebSocket.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -848,7 +892,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -863,7 +907,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -880,9 +924,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.InitWebSocket.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -898,7 +946,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -913,7 +961,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -927,9 +975,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.InitWebSocket.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -937,11 +989,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.InitWebSocket.C2S.decode(r, r.uint32());
+                            m.c2s = $root.InitWebSocket.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -956,7 +1008,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -979,9 +1031,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.InitWebSocket.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1001,11 +1057,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.InitWebSocket.S2C.decode(r, r.uint32());
+                            m.s2c = $root.InitWebSocket.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1027,7 +1083,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1041,9 +1097,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.KeepAlive.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1055,7 +1115,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1070,7 +1130,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1084,9 +1144,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.KeepAlive.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1098,7 +1162,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1113,7 +1177,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1127,9 +1191,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.KeepAlive.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1137,11 +1205,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.KeepAlive.C2S.decode(r, r.uint32());
+                            m.c2s = $root.KeepAlive.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1156,7 +1224,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1179,9 +1247,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.KeepAlive.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1201,11 +1273,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.KeepAlive.S2C.decode(r, r.uint32());
+                            m.s2c = $root.KeepAlive.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1261,7 +1333,7 @@
             function GtwEvent(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1278,9 +1350,13 @@
                 return w;
             };
     
-            GtwEvent.decode = function decode(r, l, e) {
+            GtwEvent.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Notify.GtwEvent();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1296,7 +1372,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1311,7 +1387,7 @@
             function ProgramStatus(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1325,9 +1401,13 @@
                 return w;
             };
     
-            ProgramStatus.decode = function decode(r, l, e) {
+            ProgramStatus.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Notify.ProgramStatus();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1335,11 +1415,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.programStatus = $root.Common.ProgramStatus.decode(r, r.uint32());
+                            m.programStatus = $root.Common.ProgramStatus.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1354,7 +1434,7 @@
             function ConnectStatus(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1371,9 +1451,13 @@
                 return w;
             };
     
-            ConnectStatus.decode = function decode(r, l, e) {
+            ConnectStatus.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Notify.ConnectStatus();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1389,7 +1473,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1404,7 +1488,7 @@
             function QotRight(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1427,6 +1511,7 @@
             QotRight.prototype.usCBOEFutureQotRight = 0;
             QotRight.prototype.shQotRight = 0;
             QotRight.prototype.szQotRight = 0;
+            QotRight.prototype.ccQotRight = 0;
     
             QotRight.encode = function encode(m, w) {
                 if (!w)
@@ -1469,12 +1554,18 @@
                     w.uint32(168).int32(m.shQotRight);
                 if (m.szQotRight != null && Object.hasOwnProperty.call(m, "szQotRight"))
                     w.uint32(176).int32(m.szQotRight);
+                if (m.ccQotRight != null && Object.hasOwnProperty.call(m, "ccQotRight"))
+                    w.uint32(184).int32(m.ccQotRight);
                 return w;
             };
     
-            QotRight.decode = function decode(r, l, e) {
+            QotRight.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Notify.QotRight();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1557,8 +1648,12 @@
                             m.szQotRight = r.int32();
                             break;
                         }
+                    case 23: {
+                            m.ccQotRight = r.int32();
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1573,7 +1668,7 @@
             function APILevel(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1587,9 +1682,13 @@
                 return w;
             };
     
-            APILevel.decode = function decode(r, l, e) {
+            APILevel.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Notify.APILevel();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1601,7 +1700,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1616,7 +1715,7 @@
             function APIQuota(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1633,9 +1732,13 @@
                 return w;
             };
     
-            APIQuota.decode = function decode(r, l, e) {
+            APIQuota.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Notify.APIQuota();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1651,7 +1754,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1666,7 +1769,7 @@
             function UsedQuota(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1683,9 +1786,13 @@
                 return w;
             };
     
-            UsedQuota.decode = function decode(r, l, e) {
+            UsedQuota.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Notify.UsedQuota();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1701,7 +1808,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1716,7 +1823,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1751,9 +1858,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Notify.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1765,35 +1876,35 @@
                             break;
                         }
                     case 2: {
-                            m.event = $root.Notify.GtwEvent.decode(r, r.uint32());
+                            m.event = $root.Notify.GtwEvent.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
-                            m.programStatus = $root.Notify.ProgramStatus.decode(r, r.uint32());
+                            m.programStatus = $root.Notify.ProgramStatus.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 4: {
-                            m.connectStatus = $root.Notify.ConnectStatus.decode(r, r.uint32());
+                            m.connectStatus = $root.Notify.ConnectStatus.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 5: {
-                            m.qotRight = $root.Notify.QotRight.decode(r, r.uint32());
+                            m.qotRight = $root.Notify.QotRight.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 6: {
-                            m.apiLevel = $root.Notify.APILevel.decode(r, r.uint32());
+                            m.apiLevel = $root.Notify.APILevel.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 7: {
-                            m.apiQuota = $root.Notify.APIQuota.decode(r, r.uint32());
+                            m.apiQuota = $root.Notify.APIQuota.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 8: {
-                            m.usedQuota = $root.Notify.UsedQuota.decode(r, r.uint32());
+                            m.usedQuota = $root.Notify.UsedQuota.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1808,7 +1919,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -1831,9 +1942,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Notify.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -1853,11 +1968,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Notify.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Notify.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -1888,6 +2003,7 @@
             values[valuesById[61] = "QotMarket_MY_Security"] = 61;
             values[valuesById[71] = "QotMarket_CA_Security"] = 71;
             values[valuesById[81] = "QotMarket_FX_Security"] = 81;
+            values[valuesById[91] = "QotMarket_CC_Security"] = 91;
             return values;
         })();
     
@@ -1905,11 +2021,7 @@
             values[valuesById[9] = "SecurityType_PlateSet"] = 9;
             values[valuesById[10] = "SecurityType_Future"] = 10;
             values[valuesById[11] = "SecurityType_Forex"] = 11;
-            values[valuesById[12] = "SecurityType_WealthManageFund"] = 12;
-            values[valuesById[13] = "SecurityType_ExchangeFund"] = 13;
-            values[valuesById[14] = "SecurityType_Crypto"] = 14;
-            values[valuesById[15] = "SecurityType_OTCBond"] = 15;
-            values[valuesById[16] = "SecurityType_OTCStructNotes"] = 16;
+            values[valuesById[12] = "SecurityType_Crypto"] = 12;
             return values;
         })();
     
@@ -2044,6 +2156,10 @@
             values[valuesById[9] = "KLType_60Min"] = 9;
             values[valuesById[10] = "KLType_3Min"] = 10;
             values[valuesById[11] = "KLType_Quarter"] = 11;
+            values[valuesById[12] = "KLType_10Min"] = 12;
+            values[valuesById[13] = "KLType_120Min"] = 13;
+            values[valuesById[14] = "KLType_180Min"] = 14;
+            values[valuesById[15] = "KLType_240Min"] = 15;
             return values;
         })();
     
@@ -2082,6 +2198,10 @@
             values[valuesById[15] = "SubType_KL_Qurater"] = 15;
             values[valuesById[16] = "SubType_KL_Year"] = 16;
             values[valuesById[17] = "SubType_KL_3Min"] = 17;
+            values[valuesById[18] = "SubType_KL_10Min"] = 18;
+            values[valuesById[19] = "SubType_KL_120Min"] = 19;
+            values[valuesById[20] = "SubType_KL_180Min"] = 20;
+            values[valuesById[21] = "SubType_KL_240Min"] = 21;
             return values;
         })();
     
@@ -2314,6 +2434,7 @@
             values[valuesById[32] = "CompanyAct_Add"] = 32;
             values[valuesById[64] = "CompanyAct_Dividend"] = 64;
             values[valuesById[128] = "CompanyAct_SPDividend"] = 128;
+            values[valuesById[256] = "CompanyAct_SpinOff"] = 256;
             return values;
         })();
     
@@ -2325,6 +2446,7 @@
             values[valuesById[3] = "QotRight_Level2"] = 3;
             values[valuesById[4] = "QotRight_SF"] = 4;
             values[valuesById[5] = "QotRight_No"] = 5;
+            values[valuesById[6] = "QotRight_Level3"] = 6;
             return values;
         })();
     
@@ -2422,6 +2544,7 @@
             values[valuesById[16] = "ExchType_CN_STIB"] = 16;
             values[valuesById[17] = "ExchType_SG_SGX"] = 17;
             values[valuesById[18] = "ExchType_JP_OSE"] = 18;
+            values[valuesById[19] = "ExchType_CC_CRYPTO"] = 19;
             return values;
         })();
     
@@ -2445,12 +2568,59 @@
             return values;
         })();
     
+        Qot_Common.QotHeader = (function() {
+    
+            function QotHeader(p) {
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
+                            this[ks[i]] = p[ks[i]];
+            }
+    
+            QotHeader.prototype.securityFirm = 0;
+    
+            QotHeader.encode = function encode(m, w) {
+                if (!w)
+                    w = $Writer.create();
+                if (m.securityFirm != null && Object.hasOwnProperty.call(m, "securityFirm"))
+                    w.uint32(8).int32(m.securityFirm);
+                return w;
+            };
+    
+            QotHeader.decode = function decode(r, l, e, n) {
+                if (!(r instanceof $Reader))
+                    r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
+                var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.QotHeader();
+                while (r.pos < c) {
+                    var t = r.uint32();
+                    if (t === e)
+                        break;
+                    switch (t >>> 3) {
+                    case 1: {
+                            m.securityFirm = r.int32();
+                            break;
+                        }
+                    default:
+                        r.skipType(t & 7, n);
+                        break;
+                    }
+                }
+                return m;
+            };
+    
+            return QotHeader;
+        })();
+    
         Qot_Common.Security = (function() {
     
             function Security(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -2467,9 +2637,13 @@
                 return w;
             };
     
-            Security.decode = function decode(r, l, e) {
+            Security.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.Security();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -2485,7 +2659,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -2500,7 +2674,7 @@
             function KLine(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -2517,6 +2691,7 @@
             KLine.prototype.pe = 0;
             KLine.prototype.changeRate = 0;
             KLine.prototype.timestamp = 0;
+            KLine.prototype.hpVolume = 0;
     
             KLine.encode = function encode(m, w) {
                 if (!w)
@@ -2547,12 +2722,18 @@
                     w.uint32(97).double(m.changeRate);
                 if (m.timestamp != null && Object.hasOwnProperty.call(m, "timestamp"))
                     w.uint32(105).double(m.timestamp);
+                if (m.hpVolume != null && Object.hasOwnProperty.call(m, "hpVolume"))
+                    w.uint32(113).double(m.hpVolume);
                 return w;
             };
     
-            KLine.decode = function decode(r, l, e) {
+            KLine.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.KLine();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -2611,8 +2792,12 @@
                             m.timestamp = r.double();
                             break;
                         }
+                    case 14: {
+                            m.hpVolume = r.double();
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -2627,7 +2812,7 @@
             function OptionBasicQotExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -2692,9 +2877,13 @@
                 return w;
             };
     
-            OptionBasicQotExData.decode = function decode(r, l, e) {
+            OptionBasicQotExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.OptionBasicQotExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -2774,7 +2963,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -2789,7 +2978,7 @@
             function PreAfterMarketData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -2824,9 +3013,13 @@
                 return w;
             };
     
-            PreAfterMarketData.decode = function decode(r, l, e) {
+            PreAfterMarketData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.PreAfterMarketData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -2866,7 +3059,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -2881,7 +3074,7 @@
             function FutureBasicQotExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -2904,9 +3097,13 @@
                 return w;
             };
     
-            FutureBasicQotExData.decode = function decode(r, l, e) {
+            FutureBasicQotExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.FutureBasicQotExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -2930,7 +3127,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -2945,7 +3142,7 @@
             function WarrantBasicQotExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -2965,9 +3162,13 @@
                 return w;
             };
     
-            WarrantBasicQotExData.decode = function decode(r, l, e) {
+            WarrantBasicQotExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.WarrantBasicQotExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -2987,7 +3188,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3002,7 +3203,7 @@
             function BasicQot(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3031,6 +3232,7 @@
             BasicQot.prototype.futureExData = null;
             BasicQot.prototype.warrantExData = null;
             BasicQot.prototype.overnight = null;
+            BasicQot.prototype.hpVolume = 0;
     
             BasicQot.encode = function encode(m, w) {
                 if (!w)
@@ -3085,12 +3287,18 @@
                     w.uint32(194).string(m.name);
                 if (m.overnight != null && Object.hasOwnProperty.call(m, "overnight"))
                     $root.Qot_Common.PreAfterMarketData.encode(m.overnight, w.uint32(202).fork()).ldelim();
+                if (m.hpVolume != null && Object.hasOwnProperty.call(m, "hpVolume"))
+                    w.uint32(209).double(m.hpVolume);
                 return w;
             };
     
-            BasicQot.decode = function decode(r, l, e) {
+            BasicQot.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.BasicQot();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3098,7 +3306,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 24: {
@@ -3162,7 +3370,7 @@
                             break;
                         }
                     case 16: {
-                            m.optionExData = $root.Qot_Common.OptionBasicQotExData.decode(r, r.uint32());
+                            m.optionExData = $root.Qot_Common.OptionBasicQotExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 17: {
@@ -3174,11 +3382,11 @@
                             break;
                         }
                     case 19: {
-                            m.preMarket = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32());
+                            m.preMarket = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 20: {
-                            m.afterMarket = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32());
+                            m.afterMarket = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 21: {
@@ -3186,19 +3394,23 @@
                             break;
                         }
                     case 22: {
-                            m.futureExData = $root.Qot_Common.FutureBasicQotExData.decode(r, r.uint32());
+                            m.futureExData = $root.Qot_Common.FutureBasicQotExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 23: {
-                            m.warrantExData = $root.Qot_Common.WarrantBasicQotExData.decode(r, r.uint32());
+                            m.warrantExData = $root.Qot_Common.WarrantBasicQotExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 25: {
-                            m.overnight = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32());
+                            m.overnight = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
+                    case 26: {
+                            m.hpVolume = r.double();
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3213,7 +3425,7 @@
             function TimeShare(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3226,6 +3438,7 @@
             TimeShare.prototype.volume = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
             TimeShare.prototype.turnover = 0;
             TimeShare.prototype.timestamp = 0;
+            TimeShare.prototype.hpVolume = 0;
     
             TimeShare.encode = function encode(m, w) {
                 if (!w)
@@ -3248,12 +3461,18 @@
                     w.uint32(65).double(m.turnover);
                 if (m.timestamp != null && Object.hasOwnProperty.call(m, "timestamp"))
                     w.uint32(73).double(m.timestamp);
+                if (m.hpVolume != null && Object.hasOwnProperty.call(m, "hpVolume"))
+                    w.uint32(81).double(m.hpVolume);
                 return w;
             };
     
-            TimeShare.decode = function decode(r, l, e) {
+            TimeShare.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.TimeShare();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3296,8 +3515,12 @@
                             m.timestamp = r.double();
                             break;
                         }
+                    case 10: {
+                            m.hpVolume = r.double();
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3312,7 +3535,7 @@
             function SecurityStaticBasic(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3350,9 +3573,13 @@
                 return w;
             };
     
-            SecurityStaticBasic.decode = function decode(r, l, e) {
+            SecurityStaticBasic.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.SecurityStaticBasic();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3360,7 +3587,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -3396,7 +3623,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3411,7 +3638,7 @@
             function WarrantStaticExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3428,9 +3655,13 @@
                 return w;
             };
     
-            WarrantStaticExData.decode = function decode(r, l, e) {
+            WarrantStaticExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.WarrantStaticExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3442,11 +3673,11 @@
                             break;
                         }
                     case 2: {
-                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3461,7 +3692,7 @@
             function OptionStaticExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3505,9 +3736,13 @@
                 return w;
             };
     
-            OptionStaticExData.decode = function decode(r, l, e) {
+            OptionStaticExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.OptionStaticExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3519,7 +3754,7 @@
                             break;
                         }
                     case 2: {
-                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -3559,7 +3794,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3574,7 +3809,7 @@
             function FutureStaticExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3594,9 +3829,13 @@
                 return w;
             };
     
-            FutureStaticExData.decode = function decode(r, l, e) {
+            FutureStaticExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.FutureStaticExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3616,7 +3855,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3631,7 +3870,7 @@
             function SecurityStaticInfo(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3654,9 +3893,13 @@
                 return w;
             };
     
-            SecurityStaticInfo.decode = function decode(r, l, e) {
+            SecurityStaticInfo.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.SecurityStaticInfo();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3664,23 +3907,23 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.basic = $root.Qot_Common.SecurityStaticBasic.decode(r, r.uint32());
+                            m.basic = $root.Qot_Common.SecurityStaticBasic.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.warrantExData = $root.Qot_Common.WarrantStaticExData.decode(r, r.uint32());
+                            m.warrantExData = $root.Qot_Common.WarrantStaticExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
-                            m.optionExData = $root.Qot_Common.OptionStaticExData.decode(r, r.uint32());
+                            m.optionExData = $root.Qot_Common.OptionStaticExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 4: {
-                            m.futureExData = $root.Qot_Common.FutureStaticExData.decode(r, r.uint32());
+                            m.futureExData = $root.Qot_Common.FutureStaticExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3695,7 +3938,7 @@
             function Broker(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3721,9 +3964,13 @@
                 return w;
             };
     
-            Broker.decode = function decode(r, l, e) {
+            Broker.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.Broker();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3751,7 +3998,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3766,7 +4013,7 @@
             function Ticker(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3781,6 +4028,7 @@
             Ticker.prototype.typeSign = 0;
             Ticker.prototype.pushDataType = 0;
             Ticker.prototype.timestamp = 0;
+            Ticker.prototype.hpVolume = 0;
     
             Ticker.encode = function encode(m, w) {
                 if (!w)
@@ -3807,12 +4055,18 @@
                     w.uint32(80).int32(m.pushDataType);
                 if (m.timestamp != null && Object.hasOwnProperty.call(m, "timestamp"))
                     w.uint32(89).double(m.timestamp);
+                if (m.hpVolume != null && Object.hasOwnProperty.call(m, "hpVolume"))
+                    w.uint32(97).double(m.hpVolume);
                 return w;
             };
     
-            Ticker.decode = function decode(r, l, e) {
+            Ticker.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.Ticker();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3863,8 +4117,12 @@
                             m.timestamp = r.double();
                             break;
                         }
+                    case 12: {
+                            m.hpVolume = r.double();
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3879,7 +4137,7 @@
             function OrderBookDetail(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3896,9 +4154,13 @@
                 return w;
             };
     
-            OrderBookDetail.decode = function decode(r, l, e) {
+            OrderBookDetail.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.OrderBookDetail();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3914,7 +4176,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3930,7 +4192,7 @@
                 this.detailList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -3938,6 +4200,7 @@
             OrderBook.prototype.volume = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
             OrderBook.prototype.orederCount = 0;
             OrderBook.prototype.detailList = $util.emptyArray;
+            OrderBook.prototype.hpVolume = 0;
     
             OrderBook.encode = function encode(m, w) {
                 if (!w)
@@ -3952,12 +4215,18 @@
                     for (var i = 0; i < m.detailList.length; ++i)
                         $root.Qot_Common.OrderBookDetail.encode(m.detailList[i], w.uint32(34).fork()).ldelim();
                 }
+                if (m.hpVolume != null && Object.hasOwnProperty.call(m, "hpVolume"))
+                    w.uint32(41).double(m.hpVolume);
                 return w;
             };
     
-            OrderBook.decode = function decode(r, l, e) {
+            OrderBook.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.OrderBook();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -3979,11 +4248,15 @@
                     case 4: {
                             if (!(m.detailList && m.detailList.length))
                                 m.detailList = [];
-                            m.detailList.push($root.Qot_Common.OrderBookDetail.decode(r, r.uint32()));
+                            m.detailList.push($root.Qot_Common.OrderBookDetail.decode(r, r.uint32(), undefined, n + 1));
+                            break;
+                        }
+                    case 5: {
+                            m.hpVolume = r.double();
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -3998,7 +4271,7 @@
             function ShareHoldingChange(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4030,9 +4303,13 @@
                 return w;
             };
     
-            ShareHoldingChange.decode = function decode(r, l, e) {
+            ShareHoldingChange.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.ShareHoldingChange();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4068,7 +4345,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4084,7 +4361,7 @@
                 this.securityList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4103,9 +4380,13 @@
                 return w;
             };
     
-            SubInfo.decode = function decode(r, l, e) {
+            SubInfo.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.SubInfo();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4119,11 +4400,11 @@
                     case 2: {
                             if (!(m.securityList && m.securityList.length))
                                 m.securityList = [];
-                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32()));
+                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4139,13 +4420,14 @@
                 this.subInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             ConnSubInfo.prototype.subInfoList = $util.emptyArray;
             ConnSubInfo.prototype.usedQuota = 0;
             ConnSubInfo.prototype.isOwnConnData = false;
+            ConnSubInfo.prototype.securityFirm = 0;
     
             ConnSubInfo.encode = function encode(m, w) {
                 if (!w)
@@ -4158,12 +4440,18 @@
                     w.uint32(16).int32(m.usedQuota);
                 if (m.isOwnConnData != null && Object.hasOwnProperty.call(m, "isOwnConnData"))
                     w.uint32(24).bool(m.isOwnConnData);
+                if (m.securityFirm != null && Object.hasOwnProperty.call(m, "securityFirm"))
+                    w.uint32(32).int32(m.securityFirm);
                 return w;
             };
     
-            ConnSubInfo.decode = function decode(r, l, e) {
+            ConnSubInfo.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.ConnSubInfo();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4173,7 +4461,7 @@
                     case 1: {
                             if (!(m.subInfoList && m.subInfoList.length))
                                 m.subInfoList = [];
-                            m.subInfoList.push($root.Qot_Common.SubInfo.decode(r, r.uint32()));
+                            m.subInfoList.push($root.Qot_Common.SubInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 2: {
@@ -4184,8 +4472,12 @@
                             m.isOwnConnData = r.bool();
                             break;
                         }
+                    case 4: {
+                            m.securityFirm = r.int32();
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4200,7 +4492,7 @@
             function PlateInfo(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4220,9 +4512,13 @@
                 return w;
             };
     
-            PlateInfo.decode = function decode(r, l, e) {
+            PlateInfo.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.PlateInfo();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4230,7 +4526,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.plate = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.plate = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -4242,7 +4538,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4257,7 +4553,7 @@
             function Rehab(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4283,6 +4579,8 @@
             Rehab.prototype.addPrice = 0;
             Rehab.prototype.dividend = 0;
             Rehab.prototype.spDividend = 0;
+            Rehab.prototype.spinOffBase = 0;
+            Rehab.prototype.spinOffErt = 0;
             Rehab.prototype.timestamp = 0;
     
             Rehab.encode = function encode(m, w) {
@@ -4334,12 +4632,20 @@
                     w.uint32(177).double(m.spDividend);
                 if (m.timestamp != null && Object.hasOwnProperty.call(m, "timestamp"))
                     w.uint32(185).double(m.timestamp);
+                if (m.spinOffBase != null && Object.hasOwnProperty.call(m, "spinOffBase"))
+                    w.uint32(193).double(m.spinOffBase);
+                if (m.spinOffErt != null && Object.hasOwnProperty.call(m, "spinOffErt"))
+                    w.uint32(201).double(m.spinOffErt);
                 return w;
             };
     
-            Rehab.decode = function decode(r, l, e) {
+            Rehab.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Common.Rehab();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4434,12 +4740,20 @@
                             m.spDividend = r.double();
                             break;
                         }
+                    case 24: {
+                            m.spinOffBase = r.double();
+                            break;
+                        }
+                    case 25: {
+                            m.spinOffErt = r.double();
+                            break;
+                        }
                     case 23: {
                             m.timestamp = r.double();
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4462,11 +4776,12 @@
                 this.securityList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.securityList = $util.emptyArray;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -4475,12 +4790,18 @@
                     for (var i = 0; i < m.securityList.length; ++i)
                         $root.Qot_Common.Security.encode(m.securityList[i], w.uint32(10).fork()).ldelim();
                 }
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetBasicQot.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4490,11 +4811,15 @@
                     case 1: {
                             if (!(m.securityList && m.securityList.length))
                                 m.securityList = [];
-                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32()));
+                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1));
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4510,7 +4835,7 @@
                 this.basicQotList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4526,9 +4851,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetBasicQot.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4538,11 +4867,11 @@
                     case 1: {
                             if (!(m.basicQotList && m.basicQotList.length))
                                 m.basicQotList = [];
-                            m.basicQotList.push($root.Qot_Common.BasicQot.decode(r, r.uint32()));
+                            m.basicQotList.push($root.Qot_Common.BasicQot.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4557,7 +4886,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4571,9 +4900,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetBasicQot.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4581,11 +4914,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetBasicQot.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetBasicQot.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4600,7 +4933,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4623,9 +4956,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetBasicQot.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4645,11 +4982,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetBasicQot.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetBasicQot.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4671,23 +5008,30 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.security = null;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
                     w = $Writer.create();
                 if (m.security != null && Object.hasOwnProperty.call(m, "security"))
                     $root.Qot_Common.Security.encode(m.security, w.uint32(10).fork()).ldelim();
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetBroker.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4695,11 +5039,15 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4716,7 +5064,7 @@
                 this.brokerBidList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4743,9 +5091,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetBroker.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4753,7 +5105,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 4: {
@@ -4763,17 +5115,17 @@
                     case 2: {
                             if (!(m.brokerAskList && m.brokerAskList.length))
                                 m.brokerAskList = [];
-                            m.brokerAskList.push($root.Qot_Common.Broker.decode(r, r.uint32()));
+                            m.brokerAskList.push($root.Qot_Common.Broker.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 3: {
                             if (!(m.brokerBidList && m.brokerBidList.length))
                                 m.brokerBidList = [];
-                            m.brokerBidList.push($root.Qot_Common.Broker.decode(r, r.uint32()));
+                            m.brokerBidList.push($root.Qot_Common.Broker.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4788,7 +5140,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4802,9 +5154,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetBroker.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4812,11 +5168,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetBroker.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetBroker.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4831,7 +5187,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4854,9 +5210,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetBroker.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4876,11 +5236,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetBroker.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetBroker.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4902,23 +5262,30 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.security = null;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
                     w = $Writer.create();
                 if (m.security != null && Object.hasOwnProperty.call(m, "security"))
                     $root.Qot_Common.Security.encode(m.security, w.uint32(10).fork()).ldelim();
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetCapitalDistribution.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -4926,11 +5293,15 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -4945,7 +5316,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -4986,9 +5357,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetCapitalDistribution.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5036,7 +5411,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5051,7 +5426,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5065,9 +5440,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetCapitalDistribution.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5075,11 +5454,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetCapitalDistribution.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetCapitalDistribution.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5094,7 +5473,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5117,9 +5496,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetCapitalDistribution.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5139,11 +5522,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetCapitalDistribution.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetCapitalDistribution.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5165,7 +5548,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5173,6 +5556,7 @@
             C2S.prototype.periodType = 0;
             C2S.prototype.beginTime = "";
             C2S.prototype.endTime = "";
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -5185,12 +5569,18 @@
                     w.uint32(26).string(m.beginTime);
                 if (m.endTime != null && Object.hasOwnProperty.call(m, "endTime"))
                     w.uint32(34).string(m.endTime);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetCapitalFlow.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5198,7 +5588,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -5213,8 +5603,12 @@
                             m.endTime = r.string();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5229,7 +5623,7 @@
             function CapitalFlowItem(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5264,9 +5658,13 @@
                 return w;
             };
     
-            CapitalFlowItem.decode = function decode(r, l, e) {
+            CapitalFlowItem.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetCapitalFlow.CapitalFlowItem();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5306,7 +5704,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5322,7 +5720,7 @@
                 this.flowItemList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5344,9 +5742,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetCapitalFlow.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5356,7 +5758,7 @@
                     case 1: {
                             if (!(m.flowItemList && m.flowItemList.length))
                                 m.flowItemList = [];
-                            m.flowItemList.push($root.Qot_GetCapitalFlow.CapitalFlowItem.decode(r, r.uint32()));
+                            m.flowItemList.push($root.Qot_GetCapitalFlow.CapitalFlowItem.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 2: {
@@ -5368,7 +5770,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5383,7 +5785,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5397,9 +5799,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetCapitalFlow.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5407,11 +5813,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetCapitalFlow.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetCapitalFlow.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5426,7 +5832,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5449,9 +5855,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetCapitalFlow.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5471,11 +5881,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetCapitalFlow.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetCapitalFlow.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5497,7 +5907,7 @@
             function TradeTime(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5514,9 +5924,13 @@
                 return w;
             };
     
-            TradeTime.decode = function decode(r, l, e) {
+            TradeTime.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetFutureInfo.TradeTime();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5532,7 +5946,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5548,7 +5962,7 @@
                 this.tradeTime = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5615,9 +6029,13 @@
                 return w;
             };
     
-            FutureInfo.decode = function decode(r, l, e) {
+            FutureInfo.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetFutureInfo.FutureInfo();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5629,7 +6047,7 @@
                             break;
                         }
                     case 2: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -5641,7 +6059,7 @@
                             break;
                         }
                     case 5: {
-                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 6: {
@@ -5683,7 +6101,7 @@
                     case 15: {
                             if (!(m.tradeTime && m.tradeTime.length))
                                 m.tradeTime = [];
-                            m.tradeTime.push($root.Qot_GetFutureInfo.TradeTime.decode(r, r.uint32()));
+                            m.tradeTime.push($root.Qot_GetFutureInfo.TradeTime.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 16: {
@@ -5695,11 +6113,11 @@
                             break;
                         }
                     case 18: {
-                            m.origin = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.origin = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5715,11 +6133,12 @@
                 this.securityList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.securityList = $util.emptyArray;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -5728,12 +6147,18 @@
                     for (var i = 0; i < m.securityList.length; ++i)
                         $root.Qot_Common.Security.encode(m.securityList[i], w.uint32(10).fork()).ldelim();
                 }
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetFutureInfo.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5743,11 +6168,15 @@
                     case 1: {
                             if (!(m.securityList && m.securityList.length))
                                 m.securityList = [];
-                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32()));
+                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1));
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5763,7 +6192,7 @@
                 this.futureInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5779,9 +6208,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetFutureInfo.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5791,11 +6224,11 @@
                     case 1: {
                             if (!(m.futureInfoList && m.futureInfoList.length))
                                 m.futureInfoList = [];
-                            m.futureInfoList.push($root.Qot_GetFutureInfo.FutureInfo.decode(r, r.uint32()));
+                            m.futureInfoList.push($root.Qot_GetFutureInfo.FutureInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5810,7 +6243,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5824,9 +6257,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetFutureInfo.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5834,11 +6271,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetFutureInfo.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetFutureInfo.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5853,7 +6290,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5876,9 +6313,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetFutureInfo.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5898,11 +6339,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetFutureInfo.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetFutureInfo.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5924,7 +6365,7 @@
             function BasicIpoData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -5947,9 +6388,13 @@
                 return w;
             };
     
-            BasicIpoData.decode = function decode(r, l, e) {
+            BasicIpoData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetIpoList.BasicIpoData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -5957,7 +6402,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -5973,7 +6418,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -5989,7 +6434,7 @@
                 this.winningNumData = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6053,9 +6498,13 @@
                 return w;
             };
     
-            CNIpoExData.decode = function decode(r, l, e) {
+            CNIpoExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetIpoList.CNIpoExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6129,11 +6578,11 @@
                     case 17: {
                             if (!(m.winningNumData && m.winningNumData.length))
                                 m.winningNumData = [];
-                            m.winningNumData.push($root.Qot_GetIpoList.WinningNumData.decode(r, r.uint32()));
+                            m.winningNumData.push($root.Qot_GetIpoList.WinningNumData.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6148,7 +6597,7 @@
             function WinningNumData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6165,9 +6614,13 @@
                 return w;
             };
     
-            WinningNumData.decode = function decode(r, l, e) {
+            WinningNumData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetIpoList.WinningNumData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6183,7 +6636,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6198,7 +6651,7 @@
             function HKIpoExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6233,9 +6686,13 @@
                 return w;
             };
     
-            HKIpoExData.decode = function decode(r, l, e) {
+            HKIpoExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetIpoList.HKIpoExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6275,7 +6732,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6290,7 +6747,7 @@
             function USIpoExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6310,9 +6767,13 @@
                 return w;
             };
     
-            USIpoExData.decode = function decode(r, l, e) {
+            USIpoExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetIpoList.USIpoExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6332,7 +6793,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6347,7 +6808,7 @@
             function IpoData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6370,9 +6831,13 @@
                 return w;
             };
     
-            IpoData.decode = function decode(r, l, e) {
+            IpoData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetIpoList.IpoData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6380,23 +6845,23 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.basic = $root.Qot_GetIpoList.BasicIpoData.decode(r, r.uint32());
+                            m.basic = $root.Qot_GetIpoList.BasicIpoData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.cnExData = $root.Qot_GetIpoList.CNIpoExData.decode(r, r.uint32());
+                            m.cnExData = $root.Qot_GetIpoList.CNIpoExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
-                            m.hkExData = $root.Qot_GetIpoList.HKIpoExData.decode(r, r.uint32());
+                            m.hkExData = $root.Qot_GetIpoList.HKIpoExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 4: {
-                            m.usExData = $root.Qot_GetIpoList.USIpoExData.decode(r, r.uint32());
+                            m.usExData = $root.Qot_GetIpoList.USIpoExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6411,23 +6876,30 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.market = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
                     w = $Writer.create();
                 if (m.market != null && Object.hasOwnProperty.call(m, "market"))
                     w.uint32(8).int32(m.market);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetIpoList.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6438,8 +6910,12 @@
                             m.market = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6455,7 +6931,7 @@
                 this.ipoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6471,9 +6947,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetIpoList.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6483,11 +6963,11 @@
                     case 1: {
                             if (!(m.ipoList && m.ipoList.length))
                                 m.ipoList = [];
-                            m.ipoList.push($root.Qot_GetIpoList.IpoData.decode(r, r.uint32()));
+                            m.ipoList.push($root.Qot_GetIpoList.IpoData.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6502,7 +6982,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6516,9 +6996,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetIpoList.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6526,11 +7010,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetIpoList.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetIpoList.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6545,7 +7029,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6568,9 +7052,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetIpoList.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6590,11 +7078,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetIpoList.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetIpoList.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6616,7 +7104,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6624,6 +7112,7 @@
             C2S.prototype.klType = 0;
             C2S.prototype.security = null;
             C2S.prototype.reqNum = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -6636,12 +7125,18 @@
                     $root.Qot_Common.Security.encode(m.security, w.uint32(26).fork()).ldelim();
                 if (m.reqNum != null && Object.hasOwnProperty.call(m, "reqNum"))
                     w.uint32(32).int32(m.reqNum);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetKL.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6657,15 +7152,19 @@
                             break;
                         }
                     case 3: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 4: {
                             m.reqNum = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6681,7 +7180,7 @@
                 this.klList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6703,9 +7202,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetKL.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6713,7 +7216,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -6723,11 +7226,11 @@
                     case 2: {
                             if (!(m.klList && m.klList.length))
                                 m.klList = [];
-                            m.klList.push($root.Qot_Common.KLine.decode(r, r.uint32()));
+                            m.klList.push($root.Qot_Common.KLine.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6742,7 +7245,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6756,9 +7259,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetKL.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6766,11 +7273,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetKL.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetKL.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6785,7 +7292,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6808,9 +7315,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetKL.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6830,11 +7341,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetKL.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetKL.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6857,11 +7368,12 @@
                 this.securityList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.securityList = $util.emptyArray;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -6870,12 +7382,18 @@
                     for (var i = 0; i < m.securityList.length; ++i)
                         $root.Qot_Common.Security.encode(m.securityList[i], w.uint32(10).fork()).ldelim();
                 }
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetMarketState.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6885,11 +7403,15 @@
                     case 1: {
                             if (!(m.securityList && m.securityList.length))
                                 m.securityList = [];
-                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32()));
+                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1));
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6904,7 +7426,7 @@
             function MarketInfo(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6924,9 +7446,13 @@
                 return w;
             };
     
-            MarketInfo.decode = function decode(r, l, e) {
+            MarketInfo.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetMarketState.MarketInfo();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6934,7 +7460,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -6946,7 +7472,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -6962,7 +7488,7 @@
                 this.marketInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -6978,9 +7504,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetMarketState.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -6990,11 +7520,11 @@
                     case 1: {
                             if (!(m.marketInfoList && m.marketInfoList.length))
                                 m.marketInfoList = [];
-                            m.marketInfoList.push($root.Qot_GetMarketState.MarketInfo.decode(r, r.uint32()));
+                            m.marketInfoList.push($root.Qot_GetMarketState.MarketInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7009,7 +7539,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7023,9 +7553,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetMarketState.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7033,11 +7567,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetMarketState.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetMarketState.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7052,7 +7586,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7075,9 +7609,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetMarketState.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7097,11 +7635,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetMarketState.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetMarketState.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7131,7 +7669,7 @@
             function DataFilter(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7196,9 +7734,13 @@
                 return w;
             };
     
-            DataFilter.decode = function decode(r, l, e) {
+            DataFilter.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionChain.DataFilter();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7278,7 +7820,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7293,7 +7835,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7304,6 +7846,7 @@
             C2S.prototype.beginTime = "";
             C2S.prototype.endTime = "";
             C2S.prototype.dataFilter = null;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -7322,12 +7865,18 @@
                     w.uint32(48).int32(m.indexOptionType);
                 if (m.dataFilter != null && Object.hasOwnProperty.call(m, "dataFilter"))
                     $root.Qot_GetOptionChain.DataFilter.encode(m.dataFilter, w.uint32(58).fork()).ldelim();
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionChain.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7335,7 +7884,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 6: {
@@ -7359,11 +7908,15 @@
                             break;
                         }
                     case 7: {
-                            m.dataFilter = $root.Qot_GetOptionChain.DataFilter.decode(r, r.uint32());
+                            m.dataFilter = $root.Qot_GetOptionChain.DataFilter.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7378,7 +7931,7 @@
             function OptionItem(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7395,9 +7948,13 @@
                 return w;
             };
     
-            OptionItem.decode = function decode(r, l, e) {
+            OptionItem.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionChain.OptionItem();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7405,15 +7962,15 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.call = $root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32());
+                            m.call = $root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.put = $root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32());
+                            m.put = $root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7429,7 +7986,7 @@
                 this.option = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7451,9 +8008,13 @@
                 return w;
             };
     
-            OptionChain.decode = function decode(r, l, e) {
+            OptionChain.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionChain.OptionChain();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7467,7 +8028,7 @@
                     case 2: {
                             if (!(m.option && m.option.length))
                                 m.option = [];
-                            m.option.push($root.Qot_GetOptionChain.OptionItem.decode(r, r.uint32()));
+                            m.option.push($root.Qot_GetOptionChain.OptionItem.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 3: {
@@ -7475,7 +8036,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7491,7 +8052,7 @@
                 this.optionChain = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7507,9 +8068,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionChain.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7519,11 +8084,11 @@
                     case 1: {
                             if (!(m.optionChain && m.optionChain.length))
                                 m.optionChain = [];
-                            m.optionChain.push($root.Qot_GetOptionChain.OptionChain.decode(r, r.uint32()));
+                            m.optionChain.push($root.Qot_GetOptionChain.OptionChain.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7538,7 +8103,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7552,9 +8117,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionChain.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7562,11 +8131,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetOptionChain.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetOptionChain.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7581,7 +8150,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7604,9 +8173,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionChain.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7626,11 +8199,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetOptionChain.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetOptionChain.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7652,12 +8225,13 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.owner = null;
             C2S.prototype.indexOptionType = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -7666,12 +8240,18 @@
                     $root.Qot_Common.Security.encode(m.owner, w.uint32(10).fork()).ldelim();
                 if (m.indexOptionType != null && Object.hasOwnProperty.call(m, "indexOptionType"))
                     w.uint32(16).int32(m.indexOptionType);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionExpirationDate.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7679,15 +8259,19 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             m.indexOptionType = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7702,7 +8286,7 @@
             function OptionExpirationDate(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7725,9 +8309,13 @@
                 return w;
             };
     
-            OptionExpirationDate.decode = function decode(r, l, e) {
+            OptionExpirationDate.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionExpirationDate.OptionExpirationDate();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7751,7 +8339,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7767,7 +8355,7 @@
                 this.dateList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7783,9 +8371,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionExpirationDate.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7795,11 +8387,11 @@
                     case 1: {
                             if (!(m.dateList && m.dateList.length))
                                 m.dateList = [];
-                            m.dateList.push($root.Qot_GetOptionExpirationDate.OptionExpirationDate.decode(r, r.uint32()));
+                            m.dateList.push($root.Qot_GetOptionExpirationDate.OptionExpirationDate.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7814,7 +8406,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7828,9 +8420,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionExpirationDate.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7838,11 +8434,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetOptionExpirationDate.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetOptionExpirationDate.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7857,7 +8453,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -7880,9 +8476,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOptionExpirationDate.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7902,11 +8502,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetOptionExpirationDate.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetOptionExpirationDate.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7928,12 +8528,13 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.security = null;
             C2S.prototype.num = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -7942,12 +8543,18 @@
                     $root.Qot_Common.Security.encode(m.security, w.uint32(10).fork()).ldelim();
                 if (m.num != null && Object.hasOwnProperty.call(m, "num"))
                     w.uint32(16).int32(m.num);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOrderBook.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -7955,15 +8562,19 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             m.num = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -7980,7 +8591,7 @@
                 this.orderBookBidList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8019,9 +8630,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOrderBook.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8029,7 +8644,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 8: {
@@ -8039,13 +8654,13 @@
                     case 2: {
                             if (!(m.orderBookAskList && m.orderBookAskList.length))
                                 m.orderBookAskList = [];
-                            m.orderBookAskList.push($root.Qot_Common.OrderBook.decode(r, r.uint32()));
+                            m.orderBookAskList.push($root.Qot_Common.OrderBook.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 3: {
                             if (!(m.orderBookBidList && m.orderBookBidList.length))
                                 m.orderBookBidList = [];
-                            m.orderBookBidList.push($root.Qot_Common.OrderBook.decode(r, r.uint32()));
+                            m.orderBookBidList.push($root.Qot_Common.OrderBook.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 4: {
@@ -8065,7 +8680,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8080,7 +8695,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8094,9 +8709,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOrderBook.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8104,11 +8723,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetOrderBook.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetOrderBook.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8123,7 +8742,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8146,9 +8765,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOrderBook.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8168,11 +8791,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetOrderBook.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetOrderBook.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8195,11 +8818,12 @@
                 this.securityList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.securityList = $util.emptyArray;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -8208,12 +8832,18 @@
                     for (var i = 0; i < m.securityList.length; ++i)
                         $root.Qot_Common.Security.encode(m.securityList[i], w.uint32(10).fork()).ldelim();
                 }
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOwnerPlate.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8223,11 +8853,15 @@
                     case 1: {
                             if (!(m.securityList && m.securityList.length))
                                 m.securityList = [];
-                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32()));
+                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1));
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8243,7 +8877,7 @@
                 this.plateInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8265,9 +8899,13 @@
                 return w;
             };
     
-            SecurityOwnerPlate.decode = function decode(r, l, e) {
+            SecurityOwnerPlate.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOwnerPlate.SecurityOwnerPlate();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8275,7 +8913,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -8285,11 +8923,11 @@
                     case 2: {
                             if (!(m.plateInfoList && m.plateInfoList.length))
                                 m.plateInfoList = [];
-                            m.plateInfoList.push($root.Qot_Common.PlateInfo.decode(r, r.uint32()));
+                            m.plateInfoList.push($root.Qot_Common.PlateInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8305,7 +8943,7 @@
                 this.ownerPlateList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8321,9 +8959,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOwnerPlate.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8333,11 +8975,11 @@
                     case 1: {
                             if (!(m.ownerPlateList && m.ownerPlateList.length))
                                 m.ownerPlateList = [];
-                            m.ownerPlateList.push($root.Qot_GetOwnerPlate.SecurityOwnerPlate.decode(r, r.uint32()));
+                            m.ownerPlateList.push($root.Qot_GetOwnerPlate.SecurityOwnerPlate.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8352,7 +8994,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8366,9 +9008,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOwnerPlate.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8376,11 +9022,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetOwnerPlate.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetOwnerPlate.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8395,7 +9041,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8418,9 +9064,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetOwnerPlate.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8440,11 +9090,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetOwnerPlate.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetOwnerPlate.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8466,13 +9116,14 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.plate = null;
             C2S.prototype.sortField = 0;
             C2S.prototype.ascend = false;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -8483,12 +9134,18 @@
                     w.uint32(16).int32(m.sortField);
                 if (m.ascend != null && Object.hasOwnProperty.call(m, "ascend"))
                     w.uint32(24).bool(m.ascend);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPlateSecurity.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8496,7 +9153,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.plate = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.plate = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -8507,8 +9164,12 @@
                             m.ascend = r.bool();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8524,7 +9185,7 @@
                 this.staticInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8540,9 +9201,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPlateSecurity.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8552,11 +9217,11 @@
                     case 1: {
                             if (!(m.staticInfoList && m.staticInfoList.length))
                                 m.staticInfoList = [];
-                            m.staticInfoList.push($root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32()));
+                            m.staticInfoList.push($root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8571,7 +9236,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8585,9 +9250,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPlateSecurity.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8595,11 +9264,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetPlateSecurity.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetPlateSecurity.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8614,7 +9283,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8637,9 +9306,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPlateSecurity.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8659,11 +9332,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetPlateSecurity.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetPlateSecurity.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8685,12 +9358,13 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.market = 0;
             C2S.prototype.plateSetType = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -8699,12 +9373,18 @@
                     w.uint32(8).int32(m.market);
                 if (m.plateSetType != null && Object.hasOwnProperty.call(m, "plateSetType"))
                     w.uint32(16).int32(m.plateSetType);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPlateSet.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8719,8 +9399,12 @@
                             m.plateSetType = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8736,7 +9420,7 @@
                 this.plateInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8752,9 +9436,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPlateSet.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8764,11 +9452,11 @@
                     case 1: {
                             if (!(m.plateInfoList && m.plateInfoList.length))
                                 m.plateInfoList = [];
-                            m.plateInfoList.push($root.Qot_Common.PlateInfo.decode(r, r.uint32()));
+                            m.plateInfoList.push($root.Qot_Common.PlateInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8783,7 +9471,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8797,9 +9485,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPlateSet.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8807,11 +9499,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetPlateSet.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetPlateSet.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8826,7 +9518,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8849,9 +9541,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPlateSet.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8871,11 +9567,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetPlateSet.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetPlateSet.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8898,7 +9594,7 @@
                 this.reminderSessionList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -8934,9 +9630,13 @@
                 return w;
             };
     
-            PriceReminderItem.decode = function decode(r, l, e) {
+            PriceReminderItem.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPriceReminder.PriceReminderItem();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -8979,7 +9679,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -8995,7 +9695,7 @@
                 this.itemList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9017,9 +9717,13 @@
                 return w;
             };
     
-            PriceReminder.decode = function decode(r, l, e) {
+            PriceReminder.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPriceReminder.PriceReminder();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9027,7 +9731,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -9037,11 +9741,11 @@
                     case 2: {
                             if (!(m.itemList && m.itemList.length))
                                 m.itemList = [];
-                            m.itemList.push($root.Qot_GetPriceReminder.PriceReminderItem.decode(r, r.uint32()));
+                            m.itemList.push($root.Qot_GetPriceReminder.PriceReminderItem.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9056,12 +9760,13 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.security = null;
             C2S.prototype.market = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -9070,12 +9775,18 @@
                     $root.Qot_Common.Security.encode(m.security, w.uint32(10).fork()).ldelim();
                 if (m.market != null && Object.hasOwnProperty.call(m, "market"))
                     w.uint32(16).int32(m.market);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPriceReminder.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9083,15 +9794,19 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             m.market = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9107,7 +9822,7 @@
                 this.priceReminderList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9123,9 +9838,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPriceReminder.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9135,11 +9854,11 @@
                     case 1: {
                             if (!(m.priceReminderList && m.priceReminderList.length))
                                 m.priceReminderList = [];
-                            m.priceReminderList.push($root.Qot_GetPriceReminder.PriceReminder.decode(r, r.uint32()));
+                            m.priceReminderList.push($root.Qot_GetPriceReminder.PriceReminder.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9154,7 +9873,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9168,9 +9887,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPriceReminder.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9178,11 +9901,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetPriceReminder.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetPriceReminder.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9197,7 +9920,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9220,9 +9943,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetPriceReminder.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9242,11 +9969,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetPriceReminder.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetPriceReminder.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9276,12 +10003,13 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.security = null;
             C2S.prototype.referenceType = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -9290,12 +10018,18 @@
                     $root.Qot_Common.Security.encode(m.security, w.uint32(10).fork()).ldelim();
                 if (m.referenceType != null && Object.hasOwnProperty.call(m, "referenceType"))
                     w.uint32(16).int32(m.referenceType);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetReference.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9303,15 +10037,19 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             m.referenceType = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9327,7 +10065,7 @@
                 this.staticInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9343,9 +10081,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetReference.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9355,11 +10097,11 @@
                     case 2: {
                             if (!(m.staticInfoList && m.staticInfoList.length))
                                 m.staticInfoList = [];
-                            m.staticInfoList.push($root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32()));
+                            m.staticInfoList.push($root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9374,7 +10116,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9388,9 +10130,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetReference.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9398,11 +10144,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetReference.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetReference.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9417,7 +10163,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9440,9 +10186,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetReference.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9462,11 +10212,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetReference.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetReference.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9488,23 +10238,30 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.security = null;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
                     w = $Writer.create();
                 if (m.security != null && Object.hasOwnProperty.call(m, "security"))
                     $root.Qot_Common.Security.encode(m.security, w.uint32(10).fork()).ldelim();
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetRT.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9512,11 +10269,15 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9532,7 +10293,7 @@
                 this.rtList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9554,9 +10315,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetRT.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9564,7 +10329,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -9574,11 +10339,11 @@
                     case 2: {
                             if (!(m.rtList && m.rtList.length))
                                 m.rtList = [];
-                            m.rtList.push($root.Qot_Common.TimeShare.decode(r, r.uint32()));
+                            m.rtList.push($root.Qot_Common.TimeShare.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9593,7 +10358,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9607,9 +10372,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetRT.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9617,11 +10386,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetRT.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetRT.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9636,7 +10405,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9659,9 +10428,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetRT.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9681,11 +10454,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetRT.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetRT.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9708,11 +10481,12 @@
                 this.securityList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.securityList = $util.emptyArray;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -9721,12 +10495,18 @@
                     for (var i = 0; i < m.securityList.length; ++i)
                         $root.Qot_Common.Security.encode(m.securityList[i], w.uint32(10).fork()).ldelim();
                 }
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9736,11 +10516,15 @@
                     case 1: {
                             if (!(m.securityList && m.securityList.length))
                                 m.securityList = [];
-                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32()));
+                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1));
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9755,7 +10539,7 @@
             function EquitySnapshotExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9814,9 +10598,13 @@
                 return w;
             };
     
-            EquitySnapshotExData.decode = function decode(r, l, e) {
+            EquitySnapshotExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.EquitySnapshotExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -9888,7 +10676,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -9903,7 +10691,7 @@
             function WarrantSnapshotExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -9989,9 +10777,13 @@
                 return w;
             };
     
-            WarrantSnapshotExData.decode = function decode(r, l, e) {
+            WarrantSnapshotExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.WarrantSnapshotExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -10019,7 +10811,7 @@
                             break;
                         }
                     case 6: {
-                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 7: {
@@ -10099,7 +10891,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -10114,7 +10906,7 @@
             function OptionSnapshotExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -10191,9 +10983,13 @@
                 return w;
             };
     
-            OptionSnapshotExData.decode = function decode(r, l, e) {
+            OptionSnapshotExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.OptionSnapshotExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -10205,7 +11001,7 @@
                             break;
                         }
                     case 2: {
-                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -10289,7 +11085,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -10304,7 +11100,7 @@
             function IndexSnapshotExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -10324,9 +11120,13 @@
                 return w;
             };
     
-            IndexSnapshotExData.decode = function decode(r, l, e) {
+            IndexSnapshotExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.IndexSnapshotExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -10346,7 +11146,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -10361,7 +11161,7 @@
             function PlateSnapshotExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -10381,9 +11181,13 @@
                 return w;
             };
     
-            PlateSnapshotExData.decode = function decode(r, l, e) {
+            PlateSnapshotExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.PlateSnapshotExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -10403,7 +11207,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -10418,7 +11222,7 @@
             function FutureSnapshotExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -10447,9 +11251,13 @@
                 return w;
             };
     
-            FutureSnapshotExData.decode = function decode(r, l, e) {
+            FutureSnapshotExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.FutureSnapshotExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -10481,7 +11289,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -10496,7 +11304,7 @@
             function TrustSnapshotExData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -10525,9 +11333,13 @@
                 return w;
             };
     
-            TrustSnapshotExData.decode = function decode(r, l, e) {
+            TrustSnapshotExData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.TrustSnapshotExData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -10559,7 +11371,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -10574,7 +11386,7 @@
             function SnapshotBasicData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -10620,6 +11432,9 @@
             SnapshotBasicData.prototype.secStatus = 0;
             SnapshotBasicData.prototype.closePrice5Minute = 0;
             SnapshotBasicData.prototype.overnight = null;
+            SnapshotBasicData.prototype.hpVolume = 0;
+            SnapshotBasicData.prototype.hpAskVol = 0;
+            SnapshotBasicData.prototype.hpBidVol = 0;
     
             SnapshotBasicData.encode = function encode(m, w) {
                 if (!w)
@@ -10708,12 +11523,22 @@
                     w.uint32(330).string(m.name);
                 if (m.overnight != null && Object.hasOwnProperty.call(m, "overnight"))
                     $root.Qot_Common.PreAfterMarketData.encode(m.overnight, w.uint32(338).fork()).ldelim();
+                if (m.hpVolume != null && Object.hasOwnProperty.call(m, "hpVolume"))
+                    w.uint32(345).double(m.hpVolume);
+                if (m.hpAskVol != null && Object.hasOwnProperty.call(m, "hpAskVol"))
+                    w.uint32(353).double(m.hpAskVol);
+                if (m.hpBidVol != null && Object.hasOwnProperty.call(m, "hpBidVol"))
+                    w.uint32(361).double(m.hpBidVol);
                 return w;
             };
     
-            SnapshotBasicData.decode = function decode(r, l, e) {
+            SnapshotBasicData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.SnapshotBasicData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -10721,7 +11546,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 41: {
@@ -10869,11 +11694,11 @@
                             break;
                         }
                     case 37: {
-                            m.preMarket = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32());
+                            m.preMarket = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 38: {
-                            m.afterMarket = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32());
+                            m.afterMarket = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 39: {
@@ -10885,11 +11710,23 @@
                             break;
                         }
                     case 42: {
-                            m.overnight = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32());
+                            m.overnight = $root.Qot_Common.PreAfterMarketData.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
+                    case 43: {
+                            m.hpVolume = r.double();
+                            break;
+                        }
+                    case 44: {
+                            m.hpAskVol = r.double();
+                            break;
+                        }
+                    case 45: {
+                            m.hpBidVol = r.double();
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -10904,7 +11741,7 @@
             function Snapshot(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -10939,9 +11776,13 @@
                 return w;
             };
     
-            Snapshot.decode = function decode(r, l, e) {
+            Snapshot.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.Snapshot();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -10949,39 +11790,39 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.basic = $root.Qot_GetSecuritySnapshot.SnapshotBasicData.decode(r, r.uint32());
+                            m.basic = $root.Qot_GetSecuritySnapshot.SnapshotBasicData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.equityExData = $root.Qot_GetSecuritySnapshot.EquitySnapshotExData.decode(r, r.uint32());
+                            m.equityExData = $root.Qot_GetSecuritySnapshot.EquitySnapshotExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
-                            m.warrantExData = $root.Qot_GetSecuritySnapshot.WarrantSnapshotExData.decode(r, r.uint32());
+                            m.warrantExData = $root.Qot_GetSecuritySnapshot.WarrantSnapshotExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 4: {
-                            m.optionExData = $root.Qot_GetSecuritySnapshot.OptionSnapshotExData.decode(r, r.uint32());
+                            m.optionExData = $root.Qot_GetSecuritySnapshot.OptionSnapshotExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 5: {
-                            m.indexExData = $root.Qot_GetSecuritySnapshot.IndexSnapshotExData.decode(r, r.uint32());
+                            m.indexExData = $root.Qot_GetSecuritySnapshot.IndexSnapshotExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 6: {
-                            m.plateExData = $root.Qot_GetSecuritySnapshot.PlateSnapshotExData.decode(r, r.uint32());
+                            m.plateExData = $root.Qot_GetSecuritySnapshot.PlateSnapshotExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 7: {
-                            m.futureExData = $root.Qot_GetSecuritySnapshot.FutureSnapshotExData.decode(r, r.uint32());
+                            m.futureExData = $root.Qot_GetSecuritySnapshot.FutureSnapshotExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 8: {
-                            m.trustExData = $root.Qot_GetSecuritySnapshot.TrustSnapshotExData.decode(r, r.uint32());
+                            m.trustExData = $root.Qot_GetSecuritySnapshot.TrustSnapshotExData.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -10997,7 +11838,7 @@
                 this.snapshotList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11013,9 +11854,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11025,11 +11870,11 @@
                     case 1: {
                             if (!(m.snapshotList && m.snapshotList.length))
                                 m.snapshotList = [];
-                            m.snapshotList.push($root.Qot_GetSecuritySnapshot.Snapshot.decode(r, r.uint32()));
+                            m.snapshotList.push($root.Qot_GetSecuritySnapshot.Snapshot.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11044,7 +11889,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11058,9 +11903,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11068,11 +11917,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetSecuritySnapshot.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetSecuritySnapshot.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11087,7 +11936,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11110,9 +11959,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSecuritySnapshot.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11132,11 +11985,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetSecuritySnapshot.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetSecuritySnapshot.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11159,13 +12012,14 @@
                 this.securityList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.market = 0;
             C2S.prototype.secType = 0;
             C2S.prototype.securityList = $util.emptyArray;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -11178,12 +12032,18 @@
                     for (var i = 0; i < m.securityList.length; ++i)
                         $root.Qot_Common.Security.encode(m.securityList[i], w.uint32(26).fork()).ldelim();
                 }
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetStaticInfo.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11201,11 +12061,15 @@
                     case 3: {
                             if (!(m.securityList && m.securityList.length))
                                 m.securityList = [];
-                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32()));
+                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1));
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11221,7 +12085,7 @@
                 this.staticInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11237,9 +12101,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetStaticInfo.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11249,11 +12117,11 @@
                     case 1: {
                             if (!(m.staticInfoList && m.staticInfoList.length))
                                 m.staticInfoList = [];
-                            m.staticInfoList.push($root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32()));
+                            m.staticInfoList.push($root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11268,7 +12136,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11282,9 +12150,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetStaticInfo.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11292,11 +12164,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetStaticInfo.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetStaticInfo.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11311,7 +12183,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11334,9 +12206,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetStaticInfo.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11356,11 +12232,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetStaticInfo.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetStaticInfo.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11382,23 +12258,30 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.isReqAllConn = false;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
                     w = $Writer.create();
                 if (m.isReqAllConn != null && Object.hasOwnProperty.call(m, "isReqAllConn"))
                     w.uint32(8).bool(m.isReqAllConn);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSubInfo.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11409,8 +12292,12 @@
                             m.isReqAllConn = r.bool();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11426,7 +12313,7 @@
                 this.connSubInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11448,9 +12335,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSubInfo.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11460,7 +12351,7 @@
                     case 1: {
                             if (!(m.connSubInfoList && m.connSubInfoList.length))
                                 m.connSubInfoList = [];
-                            m.connSubInfoList.push($root.Qot_Common.ConnSubInfo.decode(r, r.uint32()));
+                            m.connSubInfoList.push($root.Qot_Common.ConnSubInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 2: {
@@ -11472,7 +12363,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11487,7 +12378,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11501,9 +12392,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSubInfo.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11511,11 +12406,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetSubInfo.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetSubInfo.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11530,7 +12425,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11553,9 +12448,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetSubInfo.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11575,11 +12474,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetSubInfo.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetSubInfo.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11601,12 +12500,13 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.security = null;
             C2S.prototype.maxRetNum = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -11615,12 +12515,18 @@
                     $root.Qot_Common.Security.encode(m.security, w.uint32(10).fork()).ldelim();
                 if (m.maxRetNum != null && Object.hasOwnProperty.call(m, "maxRetNum"))
                     w.uint32(16).int32(m.maxRetNum);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetTicker.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11628,15 +12534,19 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             m.maxRetNum = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11652,7 +12562,7 @@
                 this.tickerList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11674,9 +12584,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetTicker.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11684,7 +12598,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -11694,11 +12608,11 @@
                     case 2: {
                             if (!(m.tickerList && m.tickerList.length))
                                 m.tickerList = [];
-                            m.tickerList.push($root.Qot_Common.Ticker.decode(r, r.uint32()));
+                            m.tickerList.push($root.Qot_Common.Ticker.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11713,7 +12627,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11727,9 +12641,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetTicker.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11737,11 +12655,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetTicker.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetTicker.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11756,7 +12674,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11779,9 +12697,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetTicker.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11801,11 +12723,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetTicker.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetTicker.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11827,23 +12749,30 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.groupName = "";
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
                     w = $Writer.create();
                 if (m.groupName != null && Object.hasOwnProperty.call(m, "groupName"))
                     w.uint32(10).string(m.groupName);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetUserSecurity.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11854,8 +12783,12 @@
                             m.groupName = r.string();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11871,7 +12804,7 @@
                 this.staticInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11887,9 +12820,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetUserSecurity.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11899,11 +12836,11 @@
                     case 1: {
                             if (!(m.staticInfoList && m.staticInfoList.length))
                                 m.staticInfoList = [];
-                            m.staticInfoList.push($root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32()));
+                            m.staticInfoList.push($root.Qot_Common.SecurityStaticInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11918,7 +12855,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11932,9 +12869,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetUserSecurity.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -11942,11 +12883,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetUserSecurity.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetUserSecurity.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -11961,7 +12902,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -11984,9 +12925,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetUserSecurity.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -12006,11 +12951,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetUserSecurity.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetUserSecurity.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -12041,23 +12986,30 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.groupType = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
                     w = $Writer.create();
                 if (m.groupType != null && Object.hasOwnProperty.call(m, "groupType"))
                     w.uint32(8).int32(m.groupType);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetUserSecurityGroup.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -12068,8 +13020,12 @@
                             m.groupType = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -12084,7 +13040,7 @@
             function GroupData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -12101,9 +13057,13 @@
                 return w;
             };
     
-            GroupData.decode = function decode(r, l, e) {
+            GroupData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetUserSecurityGroup.GroupData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -12119,7 +13079,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -12135,7 +13095,7 @@
                 this.groupList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -12151,9 +13111,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetUserSecurityGroup.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -12163,11 +13127,11 @@
                     case 1: {
                             if (!(m.groupList && m.groupList.length))
                                 m.groupList = [];
-                            m.groupList.push($root.Qot_GetUserSecurityGroup.GroupData.decode(r, r.uint32()));
+                            m.groupList.push($root.Qot_GetUserSecurityGroup.GroupData.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -12182,7 +13146,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -12196,9 +13160,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetUserSecurityGroup.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -12206,11 +13174,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetUserSecurityGroup.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetUserSecurityGroup.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -12225,7 +13193,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -12248,9 +13216,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetUserSecurityGroup.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -12270,11 +13242,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetUserSecurityGroup.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetUserSecurityGroup.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -12298,7 +13270,7 @@
                 this.issuerList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -12336,6 +13308,7 @@
             C2S.prototype.recoveryPriceMax = 0;
             C2S.prototype.priceRecoveryRatioMin = 0;
             C2S.prototype.priceRecoveryRatioMax = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -12416,12 +13389,18 @@
                     w.uint32(265).double(m.priceRecoveryRatioMin);
                 if (m.priceRecoveryRatioMax != null && Object.hasOwnProperty.call(m, "priceRecoveryRatioMax"))
                     w.uint32(273).double(m.priceRecoveryRatioMax);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetWarrant.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -12445,7 +13424,7 @@
                             break;
                         }
                     case 5: {
-                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 6: {
@@ -12578,8 +13557,12 @@
                             m.priceRecoveryRatioMax = r.double();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -12594,7 +13577,7 @@
             function WarrantData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -12740,9 +13723,13 @@
                 return w;
             };
     
-            WarrantData.decode = function decode(r, l, e) {
+            WarrantData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetWarrant.WarrantData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -12750,11 +13737,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.stock = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.stock = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.owner = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -12930,7 +13917,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -12946,7 +13933,7 @@
                 this.warrantDataList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -12968,9 +13955,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetWarrant.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -12988,11 +13979,11 @@
                     case 3: {
                             if (!(m.warrantDataList && m.warrantDataList.length))
                                 m.warrantDataList = [];
-                            m.warrantDataList.push($root.Qot_GetWarrant.WarrantData.decode(r, r.uint32()));
+                            m.warrantDataList.push($root.Qot_GetWarrant.WarrantData.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13007,7 +13998,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13021,9 +14012,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetWarrant.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13031,11 +14026,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_GetWarrant.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_GetWarrant.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13050,7 +14045,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13073,9 +14068,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_GetWarrant.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13095,11 +14094,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_GetWarrant.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_GetWarrant.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13131,13 +14130,14 @@
                 this.securityList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.groupName = "";
             C2S.prototype.op = 0;
             C2S.prototype.securityList = $util.emptyArray;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -13150,12 +14150,18 @@
                     for (var i = 0; i < m.securityList.length; ++i)
                         $root.Qot_Common.Security.encode(m.securityList[i], w.uint32(26).fork()).ldelim();
                 }
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_ModifyUserSecurity.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13173,11 +14179,15 @@
                     case 3: {
                             if (!(m.securityList && m.securityList.length))
                                 m.securityList = [];
-                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32()));
+                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1));
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13192,7 +14202,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13202,9 +14212,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_ModifyUserSecurity.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13212,7 +14226,7 @@
                         break;
                     switch (t >>> 3) {
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13227,7 +14241,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13241,9 +14255,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_ModifyUserSecurity.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13251,11 +14269,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_ModifyUserSecurity.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_ModifyUserSecurity.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13270,7 +14288,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13293,9 +14311,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_ModifyUserSecurity.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13315,11 +14337,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_ModifyUserSecurity.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_ModifyUserSecurity.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13341,7 +14363,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13355,6 +14377,7 @@
             C2S.prototype.nextReqKey = $util.newBuffer([]);
             C2S.prototype.extendedTime = false;
             C2S.prototype.session = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -13379,12 +14402,18 @@
                     w.uint32(72).bool(m.extendedTime);
                 if (m.session != null && Object.hasOwnProperty.call(m, "session"))
                     w.uint32(80).int32(m.session);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestHistoryKL.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13400,7 +14429,7 @@
                             break;
                         }
                     case 3: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 4: {
@@ -13431,8 +14460,12 @@
                             m.session = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13448,7 +14481,7 @@
                 this.klList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13473,9 +14506,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestHistoryKL.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13483,7 +14520,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 4: {
@@ -13493,7 +14530,7 @@
                     case 2: {
                             if (!(m.klList && m.klList.length))
                                 m.klList = [];
-                            m.klList.push($root.Qot_Common.KLine.decode(r, r.uint32()));
+                            m.klList.push($root.Qot_Common.KLine.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 3: {
@@ -13501,7 +14538,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13516,7 +14553,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13530,9 +14567,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestHistoryKL.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13540,11 +14581,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_RequestHistoryKL.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_RequestHistoryKL.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13559,7 +14600,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13582,9 +14623,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestHistoryKL.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13604,11 +14649,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_RequestHistoryKL.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_RequestHistoryKL.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13630,7 +14675,7 @@
             function DetailItem(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13653,9 +14698,13 @@
                 return w;
             };
     
-            DetailItem.decode = function decode(r, l, e) {
+            DetailItem.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestHistoryKLQuota.DetailItem();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13663,7 +14712,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 4: {
@@ -13679,7 +14728,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13694,23 +14743,30 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.bGetDetail = false;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
                     w = $Writer.create();
                 if (m.bGetDetail != null && Object.hasOwnProperty.call(m, "bGetDetail"))
                     w.uint32(16).bool(m.bGetDetail);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestHistoryKLQuota.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13721,8 +14777,12 @@
                             m.bGetDetail = r.bool();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13738,7 +14798,7 @@
                 this.detailList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13760,9 +14820,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestHistoryKLQuota.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13780,11 +14844,11 @@
                     case 3: {
                             if (!(m.detailList && m.detailList.length))
                                 m.detailList = [];
-                            m.detailList.push($root.Qot_RequestHistoryKLQuota.DetailItem.decode(r, r.uint32()));
+                            m.detailList.push($root.Qot_RequestHistoryKLQuota.DetailItem.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13799,7 +14863,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13813,9 +14877,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestHistoryKLQuota.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13823,11 +14891,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_RequestHistoryKLQuota.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_RequestHistoryKLQuota.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13842,7 +14910,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13865,9 +14933,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestHistoryKLQuota.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13887,11 +14959,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_RequestHistoryKLQuota.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_RequestHistoryKLQuota.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13913,23 +14985,30 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.security = null;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
                     w = $Writer.create();
                 if (m.security != null && Object.hasOwnProperty.call(m, "security"))
                     $root.Qot_Common.Security.encode(m.security, w.uint32(10).fork()).ldelim();
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestRehab.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13937,11 +15016,15 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -13957,7 +15040,7 @@
                 this.rehabList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -13973,9 +15056,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestRehab.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -13985,11 +15072,11 @@
                     case 1: {
                             if (!(m.rehabList && m.rehabList.length))
                                 m.rehabList = [];
-                            m.rehabList.push($root.Qot_Common.Rehab.decode(r, r.uint32()));
+                            m.rehabList.push($root.Qot_Common.Rehab.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14004,7 +15091,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14018,9 +15105,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestRehab.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14028,11 +15119,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_RequestRehab.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_RequestRehab.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14047,7 +15138,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14070,9 +15161,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestRehab.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14092,11 +15187,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_RequestRehab.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_RequestRehab.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14118,7 +15213,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14126,6 +15221,7 @@
             C2S.prototype.beginTime = "";
             C2S.prototype.endTime = "";
             C2S.prototype.security = null;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -14138,12 +15234,18 @@
                     w.uint32(26).string(m.endTime);
                 if (m.security != null && Object.hasOwnProperty.call(m, "security"))
                     $root.Qot_Common.Security.encode(m.security, w.uint32(34).fork()).ldelim();
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestTradeDate.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14163,11 +15265,15 @@
                             break;
                         }
                     case 4: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14182,7 +15288,7 @@
             function TradeDate(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14202,9 +15308,13 @@
                 return w;
             };
     
-            TradeDate.decode = function decode(r, l, e) {
+            TradeDate.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestTradeDate.TradeDate();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14224,7 +15334,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14240,7 +15350,7 @@
                 this.tradeDateList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14256,9 +15366,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestTradeDate.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14268,11 +15382,11 @@
                     case 1: {
                             if (!(m.tradeDateList && m.tradeDateList.length))
                                 m.tradeDateList = [];
-                            m.tradeDateList.push($root.Qot_RequestTradeDate.TradeDate.decode(r, r.uint32()));
+                            m.tradeDateList.push($root.Qot_RequestTradeDate.TradeDate.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14287,7 +15401,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14301,9 +15415,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestTradeDate.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14311,11 +15429,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_RequestTradeDate.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_RequestTradeDate.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14330,7 +15448,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14353,9 +15471,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_RequestTradeDate.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14375,11 +15497,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_RequestTradeDate.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_RequestTradeDate.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14414,7 +15536,7 @@
                 this.reminderSessionList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14426,6 +15548,7 @@
             C2S.prototype.value = 0;
             C2S.prototype.note = "";
             C2S.prototype.reminderSessionList = $util.emptyArray;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -14450,12 +15573,18 @@
                         w.int32(m.reminderSessionList[i]);
                     w.ldelim();
                 }
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_SetPriceReminder.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14463,7 +15592,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -14501,8 +15630,12 @@
                                 m.reminderSessionList.push(r.int32());
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14517,7 +15650,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14531,9 +15664,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_SetPriceReminder.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14545,7 +15682,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14560,7 +15697,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14574,9 +15711,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_SetPriceReminder.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14584,11 +15725,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_SetPriceReminder.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_SetPriceReminder.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14603,7 +15744,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14626,9 +15767,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_SetPriceReminder.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14648,11 +15793,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_SetPriceReminder.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_SetPriceReminder.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14853,7 +15998,7 @@
             function BaseFilter(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14879,9 +16024,13 @@
                 return w;
             };
     
-            BaseFilter.decode = function decode(r, l, e) {
+            BaseFilter.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.BaseFilter();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14909,7 +16058,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -14924,7 +16073,7 @@
             function AccumulateFilter(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -14953,9 +16102,13 @@
                 return w;
             };
     
-            AccumulateFilter.decode = function decode(r, l, e) {
+            AccumulateFilter.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.AccumulateFilter();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -14987,7 +16140,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15002,7 +16155,7 @@
             function FinancialFilter(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15031,9 +16184,13 @@
                 return w;
             };
     
-            FinancialFilter.decode = function decode(r, l, e) {
+            FinancialFilter.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.FinancialFilter();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15065,7 +16222,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15080,7 +16237,7 @@
             function PatternFilter(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15103,9 +16260,13 @@
                 return w;
             };
     
-            PatternFilter.decode = function decode(r, l, e) {
+            PatternFilter.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.PatternFilter();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15129,7 +16290,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15146,7 +16307,7 @@
                 this.secondFieldParaList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15192,9 +16353,13 @@
                 return w;
             };
     
-            CustomIndicatorFilter.decode = function decode(r, l, e) {
+            CustomIndicatorFilter.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.CustomIndicatorFilter();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15252,7 +16417,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15267,7 +16432,7 @@
             function BaseData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15284,9 +16449,13 @@
                 return w;
             };
     
-            BaseData.decode = function decode(r, l, e) {
+            BaseData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.BaseData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15302,7 +16471,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15317,7 +16486,7 @@
             function AccumulateData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15337,9 +16506,13 @@
                 return w;
             };
     
-            AccumulateData.decode = function decode(r, l, e) {
+            AccumulateData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.AccumulateData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15359,7 +16532,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15374,7 +16547,7 @@
             function FinancialData(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15394,9 +16567,13 @@
                 return w;
             };
     
-            FinancialData.decode = function decode(r, l, e) {
+            FinancialData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.FinancialData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15416,7 +16593,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15432,7 +16609,7 @@
                 this.fieldParaList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15459,9 +16636,13 @@
                 return w;
             };
     
-            CustomIndicatorData.decode = function decode(r, l, e) {
+            CustomIndicatorData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.CustomIndicatorData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15492,7 +16673,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15511,7 +16692,7 @@
                 this.customIndicatorDataList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15548,9 +16729,13 @@
                 return w;
             };
     
-            StockData.decode = function decode(r, l, e) {
+            StockData.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.StockData();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15558,7 +16743,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -15568,29 +16753,29 @@
                     case 3: {
                             if (!(m.baseDataList && m.baseDataList.length))
                                 m.baseDataList = [];
-                            m.baseDataList.push($root.Qot_StockFilter.BaseData.decode(r, r.uint32()));
+                            m.baseDataList.push($root.Qot_StockFilter.BaseData.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 4: {
                             if (!(m.accumulateDataList && m.accumulateDataList.length))
                                 m.accumulateDataList = [];
-                            m.accumulateDataList.push($root.Qot_StockFilter.AccumulateData.decode(r, r.uint32()));
+                            m.accumulateDataList.push($root.Qot_StockFilter.AccumulateData.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 5: {
                             if (!(m.financialDataList && m.financialDataList.length))
                                 m.financialDataList = [];
-                            m.financialDataList.push($root.Qot_StockFilter.FinancialData.decode(r, r.uint32()));
+                            m.financialDataList.push($root.Qot_StockFilter.FinancialData.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 6: {
                             if (!(m.customIndicatorDataList && m.customIndicatorDataList.length))
                                 m.customIndicatorDataList = [];
-                            m.customIndicatorDataList.push($root.Qot_StockFilter.CustomIndicatorData.decode(r, r.uint32()));
+                            m.customIndicatorDataList.push($root.Qot_StockFilter.CustomIndicatorData.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15610,7 +16795,7 @@
                 this.customIndicatorFilterList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15623,6 +16808,7 @@
             C2S.prototype.financialFilterList = $util.emptyArray;
             C2S.prototype.patternFilterList = $util.emptyArray;
             C2S.prototype.customIndicatorFilterList = $util.emptyArray;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -15655,12 +16841,18 @@
                     for (var i = 0; i < m.customIndicatorFilterList.length; ++i)
                         $root.Qot_StockFilter.CustomIndicatorFilter.encode(m.customIndicatorFilterList[i], w.uint32(74).fork()).ldelim();
                 }
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15680,41 +16872,45 @@
                             break;
                         }
                     case 4: {
-                            m.plate = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.plate = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 5: {
                             if (!(m.baseFilterList && m.baseFilterList.length))
                                 m.baseFilterList = [];
-                            m.baseFilterList.push($root.Qot_StockFilter.BaseFilter.decode(r, r.uint32()));
+                            m.baseFilterList.push($root.Qot_StockFilter.BaseFilter.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 6: {
                             if (!(m.accumulateFilterList && m.accumulateFilterList.length))
                                 m.accumulateFilterList = [];
-                            m.accumulateFilterList.push($root.Qot_StockFilter.AccumulateFilter.decode(r, r.uint32()));
+                            m.accumulateFilterList.push($root.Qot_StockFilter.AccumulateFilter.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 7: {
                             if (!(m.financialFilterList && m.financialFilterList.length))
                                 m.financialFilterList = [];
-                            m.financialFilterList.push($root.Qot_StockFilter.FinancialFilter.decode(r, r.uint32()));
+                            m.financialFilterList.push($root.Qot_StockFilter.FinancialFilter.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 8: {
                             if (!(m.patternFilterList && m.patternFilterList.length))
                                 m.patternFilterList = [];
-                            m.patternFilterList.push($root.Qot_StockFilter.PatternFilter.decode(r, r.uint32()));
+                            m.patternFilterList.push($root.Qot_StockFilter.PatternFilter.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 9: {
                             if (!(m.customIndicatorFilterList && m.customIndicatorFilterList.length))
                                 m.customIndicatorFilterList = [];
-                            m.customIndicatorFilterList.push($root.Qot_StockFilter.CustomIndicatorFilter.decode(r, r.uint32()));
+                            m.customIndicatorFilterList.push($root.Qot_StockFilter.CustomIndicatorFilter.decode(r, r.uint32(), undefined, n + 1));
+                            break;
+                        }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15730,7 +16926,7 @@
                 this.dataList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15752,9 +16948,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15772,11 +16972,11 @@
                     case 3: {
                             if (!(m.dataList && m.dataList.length))
                                 m.dataList = [];
-                            m.dataList.push($root.Qot_StockFilter.StockData.decode(r, r.uint32()));
+                            m.dataList.push($root.Qot_StockFilter.StockData.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15791,7 +16991,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15805,9 +17005,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15815,11 +17019,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_StockFilter.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_StockFilter.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15834,7 +17038,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15857,9 +17061,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_StockFilter.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15879,11 +17087,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_StockFilter.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_StockFilter.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -15908,7 +17116,7 @@
                 this.regPushRehabTypeList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -15922,6 +17130,7 @@
             C2S.prototype.isSubOrderBookDetail = false;
             C2S.prototype.extendedTime = false;
             C2S.prototype.session = 0;
+            C2S.prototype.header = null;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -15956,12 +17165,18 @@
                     w.uint32(72).bool(m.extendedTime);
                 if (m.session != null && Object.hasOwnProperty.call(m, "session"))
                     w.uint32(80).int32(m.session);
+                if (m.header != null && Object.hasOwnProperty.call(m, "header"))
+                    $root.Qot_Common.QotHeader.encode(m.header, w.uint32(802).fork()).ldelim();
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Sub.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -15971,7 +17186,7 @@
                     case 1: {
                             if (!(m.securityList && m.securityList.length))
                                 m.securityList = [];
-                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32()));
+                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 2: {
@@ -16024,8 +17239,12 @@
                             m.session = r.int32();
                             break;
                         }
+                    case 100: {
+                            m.header = $root.Qot_Common.QotHeader.decode(r, r.uint32(), undefined, n + 1);
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16040,7 +17259,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16050,9 +17269,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Sub.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16060,7 +17283,7 @@
                         break;
                     switch (t >>> 3) {
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16075,7 +17298,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16089,9 +17312,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Sub.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16099,11 +17326,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Qot_Sub.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Qot_Sub.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16118,7 +17345,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16141,9 +17368,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_Sub.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16163,11 +17394,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_Sub.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_Sub.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16190,7 +17421,7 @@
                 this.basicQotList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16206,9 +17437,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateBasicQot.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16218,11 +17453,11 @@
                     case 1: {
                             if (!(m.basicQotList && m.basicQotList.length))
                                 m.basicQotList = [];
-                            m.basicQotList.push($root.Qot_Common.BasicQot.decode(r, r.uint32()));
+                            m.basicQotList.push($root.Qot_Common.BasicQot.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16237,7 +17472,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16260,9 +17495,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateBasicQot.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16282,11 +17521,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_UpdateBasicQot.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_UpdateBasicQot.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16310,7 +17549,7 @@
                 this.brokerBidList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16337,9 +17576,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateBroker.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16347,7 +17590,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 4: {
@@ -16357,17 +17600,17 @@
                     case 2: {
                             if (!(m.brokerAskList && m.brokerAskList.length))
                                 m.brokerAskList = [];
-                            m.brokerAskList.push($root.Qot_Common.Broker.decode(r, r.uint32()));
+                            m.brokerAskList.push($root.Qot_Common.Broker.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 3: {
                             if (!(m.brokerBidList && m.brokerBidList.length))
                                 m.brokerBidList = [];
-                            m.brokerBidList.push($root.Qot_Common.Broker.decode(r, r.uint32()));
+                            m.brokerBidList.push($root.Qot_Common.Broker.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16382,7 +17625,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16405,9 +17648,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateBroker.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16427,11 +17674,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_UpdateBroker.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_UpdateBroker.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16454,7 +17701,7 @@
                 this.klList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16482,9 +17729,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateKL.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16500,7 +17751,7 @@
                             break;
                         }
                     case 3: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 5: {
@@ -16510,11 +17761,11 @@
                     case 4: {
                             if (!(m.klList && m.klList.length))
                                 m.klList = [];
-                            m.klList.push($root.Qot_Common.KLine.decode(r, r.uint32()));
+                            m.klList.push($root.Qot_Common.KLine.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16529,7 +17780,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16552,9 +17803,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateKL.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16574,11 +17829,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_UpdateKL.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_UpdateKL.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16602,7 +17857,7 @@
                 this.orderBookBidList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16641,9 +17896,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateOrderBook.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16651,7 +17910,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 8: {
@@ -16661,13 +17920,13 @@
                     case 2: {
                             if (!(m.orderBookAskList && m.orderBookAskList.length))
                                 m.orderBookAskList = [];
-                            m.orderBookAskList.push($root.Qot_Common.OrderBook.decode(r, r.uint32()));
+                            m.orderBookAskList.push($root.Qot_Common.OrderBook.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 3: {
                             if (!(m.orderBookBidList && m.orderBookBidList.length))
                                 m.orderBookBidList = [];
-                            m.orderBookBidList.push($root.Qot_Common.OrderBook.decode(r, r.uint32()));
+                            m.orderBookBidList.push($root.Qot_Common.OrderBook.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 4: {
@@ -16687,7 +17946,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16702,7 +17961,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16725,9 +17984,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateOrderBook.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16747,11 +18010,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_UpdateOrderBook.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_UpdateOrderBook.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16773,7 +18036,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16817,9 +18080,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdatePriceReminder.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16827,7 +18094,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 11: {
@@ -16871,7 +18138,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16886,7 +18153,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16909,9 +18176,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdatePriceReminder.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16931,11 +18202,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_UpdatePriceReminder.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_UpdatePriceReminder.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -16958,7 +18229,7 @@
                 this.rtList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -16980,9 +18251,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateRT.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -16990,7 +18265,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -17000,11 +18275,11 @@
                     case 2: {
                             if (!(m.rtList && m.rtList.length))
                                 m.rtList = [];
-                            m.rtList.push($root.Qot_Common.TimeShare.decode(r, r.uint32()));
+                            m.rtList.push($root.Qot_Common.TimeShare.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -17019,7 +18294,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -17042,9 +18317,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateRT.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -17064,11 +18343,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_UpdateRT.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_UpdateRT.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -17091,7 +18370,7 @@
                 this.tickerList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -17113,9 +18392,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateTicker.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -17123,7 +18406,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -17133,11 +18416,11 @@
                     case 2: {
                             if (!(m.tickerList && m.tickerList.length))
                                 m.tickerList = [];
-                            m.tickerList.push($root.Qot_Common.Ticker.decode(r, r.uint32()));
+                            m.tickerList.push($root.Qot_Common.Ticker.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -17152,7 +18435,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -17175,9 +18458,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Qot_UpdateTicker.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -17197,11 +18484,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Qot_UpdateTicker.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Qot_UpdateTicker.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -17230,6 +18517,7 @@
             values[valuesById[0] = "TrdCategory_Unknown"] = 0;
             values[valuesById[1] = "TrdCategory_Security"] = 1;
             values[valuesById[2] = "TrdCategory_Future"] = 2;
+            values[valuesById[3] = "TrdCategory_Crypto"] = 3;
             return values;
         })();
     
@@ -17242,6 +18530,7 @@
             values[valuesById[4] = "TrdMarket_HKCC"] = 4;
             values[valuesById[5] = "TrdMarket_Futures"] = 5;
             values[valuesById[6] = "TrdMarket_SG"] = 6;
+            values[valuesById[7] = "TrdMarket_Crypto"] = 7;
             values[valuesById[8] = "TrdMarket_AU"] = 8;
             values[valuesById[10] = "TrdMarket_Futures_Simulate_HK"] = 10;
             values[valuesById[11] = "TrdMarket_Futures_Simulate_US"] = 11;
@@ -17271,6 +18560,7 @@
             values[valuesById[71] = "TrdSecMarket_MY"] = 71;
             values[valuesById[81] = "TrdSecMarket_CA"] = 81;
             values[valuesById[91] = "TrdSecMarket_FX"] = 91;
+            values[valuesById[101] = "TrdSecMarket_CC"] = 101;
             return values;
         })();
     
@@ -17420,19 +18710,7 @@
             var valuesById = {}, values = Object.create(valuesById);
             values[valuesById[0] = "TimeInForce_DAY"] = 0;
             values[valuesById[1] = "TimeInForce_GTC"] = 1;
-            return values;
-        })();
-    
-        Trd_Common.SecurityFirm = (function() {
-            var valuesById = {}, values = Object.create(valuesById);
-            values[valuesById[0] = "SecurityFirm_Unknown"] = 0;
-            values[valuesById[1] = "SecurityFirm_FutuSecurities"] = 1;
-            values[valuesById[2] = "SecurityFirm_FutuInc"] = 2;
-            values[valuesById[3] = "SecurityFirm_FutuSG"] = 3;
-            values[valuesById[4] = "SecurityFirm_FutuAU"] = 4;
-            values[valuesById[5] = "SecurityFirm_FutuCA"] = 5;
-            values[valuesById[6] = "SecurityFirm_FutuMY"] = 6;
-            values[valuesById[7] = "SecurityFirm_FutuJP"] = 7;
+            values[valuesById[2] = "TimeInForce_IOC"] = 2;
             return values;
         })();
     
@@ -17442,6 +18720,7 @@
             values[valuesById[1] = "SimAccType_Stock"] = 1;
             values[valuesById[2] = "SimAccType_Option"] = 2;
             values[valuesById[3] = "SimAccType_Futures"] = 3;
+            values[valuesById[4] = "SimAccType_StockAndOption"] = 4;
             return values;
         })();
     
@@ -17499,12 +18778,25 @@
             return values;
         })();
     
+        Trd_Common.ExposureLevel = (function() {
+            var valuesById = {}, values = Object.create(valuesById);
+            values[valuesById[0] = "ExposureLevel_Unknown"] = 0;
+            values[valuesById[1] = "ExposureLevel_Normal"] = 1;
+            values[valuesById[2] = "ExposureLevel_NearLimit"] = 2;
+            values[valuesById[3] = "ExposureLevel_Restricted"] = 3;
+            values[valuesById[4] = "ExposureLevel_Safe"] = 4;
+            values[valuesById[5] = "ExposureLevel_Moderate"] = 5;
+            values[valuesById[6] = "ExposureLevel_Warning"] = 6;
+            values[valuesById[7] = "ExposureLevel_MarginCall"] = 7;
+            return values;
+        })();
+    
         Trd_Common.AccCashInfo = (function() {
     
             function AccCashInfo(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -17527,9 +18819,13 @@
                 return w;
             };
     
-            AccCashInfo.decode = function decode(r, l, e) {
+            AccCashInfo.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.AccCashInfo();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -17553,7 +18849,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -17568,7 +18864,7 @@
             function AccMarketInfo(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -17585,9 +18881,13 @@
                 return w;
             };
     
-            AccMarketInfo.decode = function decode(r, l, e) {
+            AccMarketInfo.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.AccMarketInfo();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -17603,7 +18903,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -17618,7 +18918,7 @@
             function TrdHeader(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -17641,9 +18941,13 @@
                 return w;
             };
     
-            TrdHeader.decode = function decode(r, l, e) {
+            TrdHeader.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.TrdHeader();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -17667,7 +18971,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -17681,9 +18985,10 @@
     
             function TrdAcc(p) {
                 this.trdMarketAuthList = [];
+                this.jpAccType = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -17697,7 +19002,7 @@
             TrdAcc.prototype.uniCardNum = "";
             TrdAcc.prototype.accStatus = 0;
             TrdAcc.prototype.accRole = 0;
-            TrdAcc.prototype.jpAccType = 0;
+            TrdAcc.prototype.jpAccType = $util.emptyArray;
     
             TrdAcc.encode = function encode(m, w) {
                 if (!w)
@@ -17726,14 +19031,22 @@
                     w.uint32(72).int32(m.accStatus);
                 if (m.accRole != null && Object.hasOwnProperty.call(m, "accRole"))
                     w.uint32(80).int32(m.accRole);
-                if (m.jpAccType != null && Object.hasOwnProperty.call(m, "jpAccType"))
-                    w.uint32(88).int32(m.jpAccType);
+                if (m.jpAccType != null && m.jpAccType.length) {
+                    w.uint32(90).fork();
+                    for (var i = 0; i < m.jpAccType.length; ++i)
+                        w.int32(m.jpAccType[i]);
+                    w.ldelim();
+                }
                 return w;
             };
     
-            TrdAcc.decode = function decode(r, l, e) {
+            TrdAcc.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.TrdAcc();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -17788,11 +19101,18 @@
                             break;
                         }
                     case 11: {
-                            m.jpAccType = r.int32();
+                            if (!(m.jpAccType && m.jpAccType.length))
+                                m.jpAccType = [];
+                            if ((t & 7) === 2) {
+                                var c2 = r.uint32() + r.pos;
+                                while (r.pos < c2)
+                                    m.jpAccType.push(r.int32());
+                            } else
+                                m.jpAccType.push(r.int32());
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -17809,7 +19129,7 @@
                 this.marketInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -17846,6 +19166,11 @@
             Funds.prototype.fundAssets = 0;
             Funds.prototype.bondAssets = 0;
             Funds.prototype.marketInfoList = $util.emptyArray;
+            Funds.prototype.cryptoMv = 0;
+            Funds.prototype.exposureLevel = 0;
+            Funds.prototype.exposureLimit = 0;
+            Funds.prototype.usedLimit = 0;
+            Funds.prototype.remainingLimit = 0;
     
             Funds.encode = function encode(m, w) {
                 if (!w)
@@ -17920,12 +19245,26 @@
                     for (var i = 0; i < m.marketInfoList.length; ++i)
                         $root.Trd_Common.AccMarketInfo.encode(m.marketInfoList[i], w.uint32(266).fork()).ldelim();
                 }
+                if (m.cryptoMv != null && Object.hasOwnProperty.call(m, "cryptoMv"))
+                    w.uint32(273).double(m.cryptoMv);
+                if (m.exposureLevel != null && Object.hasOwnProperty.call(m, "exposureLevel"))
+                    w.uint32(280).int32(m.exposureLevel);
+                if (m.exposureLimit != null && Object.hasOwnProperty.call(m, "exposureLimit"))
+                    w.uint32(289).double(m.exposureLimit);
+                if (m.usedLimit != null && Object.hasOwnProperty.call(m, "usedLimit"))
+                    w.uint32(297).double(m.usedLimit);
+                if (m.remainingLimit != null && Object.hasOwnProperty.call(m, "remainingLimit"))
+                    w.uint32(305).double(m.remainingLimit);
                 return w;
             };
     
-            Funds.decode = function decode(r, l, e) {
+            Funds.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.Funds();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -17991,7 +19330,7 @@
                     case 15: {
                             if (!(m.cashInfoList && m.cashInfoList.length))
                                 m.cashInfoList = [];
-                            m.cashInfoList.push($root.Trd_Common.AccCashInfo.decode(r, r.uint32()));
+                            m.cashInfoList.push($root.Trd_Common.AccCashInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     case 16: {
@@ -18065,11 +19404,31 @@
                     case 33: {
                             if (!(m.marketInfoList && m.marketInfoList.length))
                                 m.marketInfoList = [];
-                            m.marketInfoList.push($root.Trd_Common.AccMarketInfo.decode(r, r.uint32()));
+                            m.marketInfoList.push($root.Trd_Common.AccMarketInfo.decode(r, r.uint32(), undefined, n + 1));
+                            break;
+                        }
+                    case 34: {
+                            m.cryptoMv = r.double();
+                            break;
+                        }
+                    case 35: {
+                            m.exposureLevel = r.int32();
+                            break;
+                        }
+                    case 36: {
+                            m.exposureLimit = r.double();
+                            break;
+                        }
+                    case 37: {
+                            m.usedLimit = r.double();
+                            break;
+                        }
+                    case 38: {
+                            m.remainingLimit = r.double();
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -18084,7 +19443,7 @@
             function Position(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -18170,9 +19529,13 @@
                 return w;
             };
     
-            Position.decode = function decode(r, l, e) {
+            Position.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.Position();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -18280,7 +19643,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -18295,7 +19658,7 @@
             function Order(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -18390,9 +19753,13 @@
                 return w;
             };
     
-            Order.decode = function decode(r, l, e) {
+            Order.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.Order();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -18512,7 +19879,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -18527,7 +19894,7 @@
             function OrderFeeItem(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -18544,9 +19911,13 @@
                 return w;
             };
     
-            OrderFeeItem.decode = function decode(r, l, e) {
+            OrderFeeItem.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.OrderFeeItem();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -18562,7 +19933,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -18578,7 +19949,7 @@
                 this.feeList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -18600,9 +19971,13 @@
                 return w;
             };
     
-            OrderFee.decode = function decode(r, l, e) {
+            OrderFee.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.OrderFee();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -18620,11 +19995,11 @@
                     case 3: {
                             if (!(m.feeList && m.feeList.length))
                                 m.feeList = [];
-                            m.feeList.push($root.Trd_Common.OrderFeeItem.decode(r, r.uint32()));
+                            m.feeList.push($root.Trd_Common.OrderFeeItem.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -18639,7 +20014,7 @@
             function OrderFill(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -18704,9 +20079,13 @@
                 return w;
             };
     
-            OrderFill.decode = function decode(r, l, e) {
+            OrderFill.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.OrderFill();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -18786,7 +20165,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -18801,7 +20180,7 @@
             function MaxTrdQtys(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -18836,9 +20215,13 @@
                 return w;
             };
     
-            MaxTrdQtys.decode = function decode(r, l, e) {
+            MaxTrdQtys.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.MaxTrdQtys();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -18878,7 +20261,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -18896,7 +20279,7 @@
                 this.orderIDExList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -18933,9 +20316,13 @@
                 return w;
             };
     
-            TrdFilterConditions.decode = function decode(r, l, e) {
+            TrdFilterConditions.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_Common.TrdFilterConditions();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -18978,7 +20365,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -18986,6 +20373,19 @@
             };
     
             return TrdFilterConditions;
+        })();
+    
+        Trd_Common.SecurityFirm = (function() {
+            var valuesById = {}, values = Object.create(valuesById);
+            values[valuesById[0] = "SecurityFirm_Unknown"] = 0;
+            values[valuesById[1] = "SecurityFirm_FutuSecurities"] = 1;
+            values[valuesById[2] = "SecurityFirm_FutuInc"] = 2;
+            values[valuesById[3] = "SecurityFirm_FutuSG"] = 3;
+            values[valuesById[4] = "SecurityFirm_FutuAU"] = 4;
+            values[valuesById[5] = "SecurityFirm_FutuCA"] = 5;
+            values[valuesById[6] = "SecurityFirm_FutuMY"] = 6;
+            values[valuesById[7] = "SecurityFirm_FutuJP"] = 7;
+            return values;
         })();
     
         return Trd_Common;
@@ -19008,7 +20408,7 @@
             function FlowSummaryInfo(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19020,6 +20420,7 @@
             FlowSummaryInfo.prototype.cashFlowAmount = 0;
             FlowSummaryInfo.prototype.cashFlowRemark = "";
             FlowSummaryInfo.prototype.cashFlowID = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+            FlowSummaryInfo.prototype.createTime = "";
     
             FlowSummaryInfo.encode = function encode(m, w) {
                 if (!w)
@@ -19040,12 +20441,18 @@
                     w.uint32(58).string(m.cashFlowRemark);
                 if (m.cashFlowID != null && Object.hasOwnProperty.call(m, "cashFlowID"))
                     w.uint32(64).uint64(m.cashFlowID);
+                if (m.createTime != null && Object.hasOwnProperty.call(m, "createTime"))
+                    w.uint32(74).string(m.createTime);
                 return w;
             };
     
-            FlowSummaryInfo.decode = function decode(r, l, e) {
+            FlowSummaryInfo.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_FlowSummary.FlowSummaryInfo();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19084,8 +20491,12 @@
                             m.cashFlowID = r.uint64();
                             break;
                         }
+                    case 9: {
+                            m.createTime = r.string();
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19100,13 +20511,15 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
             C2S.prototype.header = null;
             C2S.prototype.clearingDate = "";
             C2S.prototype.cashFlowDirection = 0;
+            C2S.prototype.startCreateDate = "";
+            C2S.prototype.endCreateDate = "";
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -19117,12 +20530,20 @@
                     w.uint32(18).string(m.clearingDate);
                 if (m.cashFlowDirection != null && Object.hasOwnProperty.call(m, "cashFlowDirection"))
                     w.uint32(24).int32(m.cashFlowDirection);
+                if (m.startCreateDate != null && Object.hasOwnProperty.call(m, "startCreateDate"))
+                    w.uint32(34).string(m.startCreateDate);
+                if (m.endCreateDate != null && Object.hasOwnProperty.call(m, "endCreateDate"))
+                    w.uint32(42).string(m.endCreateDate);
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_FlowSummary.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19130,7 +20551,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -19141,8 +20562,16 @@
                             m.cashFlowDirection = r.int32();
                             break;
                         }
+                    case 4: {
+                            m.startCreateDate = r.string();
+                            break;
+                        }
+                    case 5: {
+                            m.endCreateDate = r.string();
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19158,7 +20587,7 @@
                 this.flowSummaryInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19177,9 +20606,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_FlowSummary.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19187,17 +20620,17 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             if (!(m.flowSummaryInfoList && m.flowSummaryInfoList.length))
                                 m.flowSummaryInfoList = [];
-                            m.flowSummaryInfoList.push($root.Trd_FlowSummary.FlowSummaryInfo.decode(r, r.uint32()));
+                            m.flowSummaryInfoList.push($root.Trd_FlowSummary.FlowSummaryInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19212,7 +20645,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19226,9 +20659,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_FlowSummary.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19236,11 +20673,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_FlowSummary.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_FlowSummary.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19255,7 +20692,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19278,9 +20715,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_FlowSummary.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19300,11 +20741,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_FlowSummary.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_FlowSummary.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19326,7 +20767,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19346,9 +20787,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetAccList.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19368,7 +20813,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19384,7 +20829,7 @@
                 this.accList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19400,9 +20845,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetAccList.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19412,11 +20861,11 @@
                     case 1: {
                             if (!(m.accList && m.accList.length))
                                 m.accList = [];
-                            m.accList.push($root.Trd_Common.TrdAcc.decode(r, r.uint32()));
+                            m.accList.push($root.Trd_Common.TrdAcc.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19431,7 +20880,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19445,9 +20894,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetAccList.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19455,11 +20908,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_GetAccList.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_GetAccList.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19474,7 +20927,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19497,9 +20950,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetAccList.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19519,11 +20976,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_GetAccList.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_GetAccList.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19545,7 +21002,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19568,9 +21025,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetFunds.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19578,7 +21039,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -19594,7 +21055,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19609,7 +21070,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19626,9 +21087,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetFunds.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19636,15 +21101,15 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.funds = $root.Trd_Common.Funds.decode(r, r.uint32());
+                            m.funds = $root.Trd_Common.Funds.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19659,7 +21124,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19673,9 +21138,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetFunds.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19683,11 +21152,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_GetFunds.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_GetFunds.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19702,7 +21171,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19725,9 +21194,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetFunds.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19747,11 +21220,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_GetFunds.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_GetFunds.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19773,7 +21246,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19790,9 +21263,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetHistoryOrderFillList.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19800,15 +21277,15 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.filterConditions = $root.Trd_Common.TrdFilterConditions.decode(r, r.uint32());
+                            m.filterConditions = $root.Trd_Common.TrdFilterConditions.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19824,7 +21301,7 @@
                 this.orderFillList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19843,9 +21320,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetHistoryOrderFillList.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19853,17 +21334,17 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             if (!(m.orderFillList && m.orderFillList.length))
                                 m.orderFillList = [];
-                            m.orderFillList.push($root.Trd_Common.OrderFill.decode(r, r.uint32()));
+                            m.orderFillList.push($root.Trd_Common.OrderFill.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19878,7 +21359,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19892,9 +21373,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetHistoryOrderFillList.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19902,11 +21387,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_GetHistoryOrderFillList.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_GetHistoryOrderFillList.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19921,7 +21406,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -19944,9 +21429,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetHistoryOrderFillList.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -19966,11 +21455,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_GetHistoryOrderFillList.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_GetHistoryOrderFillList.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -19993,7 +21482,7 @@
                 this.filterStatusList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20017,9 +21506,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetHistoryOrderList.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20027,11 +21520,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.filterConditions = $root.Trd_Common.TrdFilterConditions.decode(r, r.uint32());
+                            m.filterConditions = $root.Trd_Common.TrdFilterConditions.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -20046,7 +21539,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20062,7 +21555,7 @@
                 this.orderList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20081,9 +21574,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetHistoryOrderList.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20091,17 +21588,17 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             if (!(m.orderList && m.orderList.length))
                                 m.orderList = [];
-                            m.orderList.push($root.Trd_Common.Order.decode(r, r.uint32()));
+                            m.orderList.push($root.Trd_Common.Order.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20116,7 +21613,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20130,9 +21627,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetHistoryOrderList.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20140,11 +21641,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_GetHistoryOrderList.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_GetHistoryOrderList.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20159,7 +21660,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20182,9 +21683,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetHistoryOrderList.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20204,11 +21709,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_GetHistoryOrderList.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_GetHistoryOrderList.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20230,7 +21735,7 @@
             function MarginRatioInfo(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20280,9 +21785,13 @@
                 return w;
             };
     
-            MarginRatioInfo.decode = function decode(r, l, e) {
+            MarginRatioInfo.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetMarginRatio.MarginRatioInfo();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20290,7 +21799,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.security = $root.Qot_Common.Security.decode(r, r.uint32());
+                            m.security = $root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -20342,7 +21851,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20358,7 +21867,7 @@
                 this.securityList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20377,9 +21886,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetMarginRatio.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20387,17 +21900,17 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             if (!(m.securityList && m.securityList.length))
                                 m.securityList = [];
-                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32()));
+                            m.securityList.push($root.Qot_Common.Security.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20413,7 +21926,7 @@
                 this.marginRatioInfoList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20432,9 +21945,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetMarginRatio.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20442,17 +21959,17 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             if (!(m.marginRatioInfoList && m.marginRatioInfoList.length))
                                 m.marginRatioInfoList = [];
-                            m.marginRatioInfoList.push($root.Trd_GetMarginRatio.MarginRatioInfo.decode(r, r.uint32()));
+                            m.marginRatioInfoList.push($root.Trd_GetMarginRatio.MarginRatioInfo.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20467,7 +21984,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20481,9 +21998,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetMarginRatio.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20491,11 +22012,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_GetMarginRatio.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_GetMarginRatio.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20510,7 +22031,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20533,9 +22054,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetMarginRatio.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20555,11 +22080,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_GetMarginRatio.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_GetMarginRatio.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20581,7 +22106,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20625,9 +22150,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetMaxTrdQtys.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20635,7 +22164,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -20679,7 +22208,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20694,7 +22223,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20711,9 +22240,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetMaxTrdQtys.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20721,15 +22254,15 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.maxTrdQtys = $root.Trd_Common.MaxTrdQtys.decode(r, r.uint32());
+                            m.maxTrdQtys = $root.Trd_Common.MaxTrdQtys.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20744,7 +22277,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20758,9 +22291,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetMaxTrdQtys.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20768,11 +22305,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_GetMaxTrdQtys.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_GetMaxTrdQtys.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20787,7 +22324,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20810,9 +22347,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetMaxTrdQtys.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20832,11 +22373,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_GetMaxTrdQtys.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_GetMaxTrdQtys.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20859,7 +22400,7 @@
                 this.orderIdExList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20878,9 +22419,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderFee.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20888,7 +22433,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -20898,7 +22443,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20914,7 +22459,7 @@
                 this.orderFeeList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20933,9 +22478,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderFee.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20943,17 +22492,17 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             if (!(m.orderFeeList && m.orderFeeList.length))
                                 m.orderFeeList = [];
-                            m.orderFeeList.push($root.Trd_Common.OrderFee.decode(r, r.uint32()));
+                            m.orderFeeList.push($root.Trd_Common.OrderFee.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -20968,7 +22517,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -20982,9 +22531,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderFee.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -20992,11 +22545,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_GetOrderFee.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_GetOrderFee.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21011,7 +22564,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21034,9 +22587,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderFee.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21056,11 +22613,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_GetOrderFee.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_GetOrderFee.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21082,7 +22639,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21102,9 +22659,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderFillList.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21112,11 +22673,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.filterConditions = $root.Trd_Common.TrdFilterConditions.decode(r, r.uint32());
+                            m.filterConditions = $root.Trd_Common.TrdFilterConditions.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -21124,7 +22685,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21140,7 +22701,7 @@
                 this.orderFillList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21159,9 +22720,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderFillList.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21169,17 +22734,17 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             if (!(m.orderFillList && m.orderFillList.length))
                                 m.orderFillList = [];
-                            m.orderFillList.push($root.Trd_Common.OrderFill.decode(r, r.uint32()));
+                            m.orderFillList.push($root.Trd_Common.OrderFill.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21194,7 +22759,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21208,9 +22773,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderFillList.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21218,11 +22787,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_GetOrderFillList.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_GetOrderFillList.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21237,7 +22806,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21260,9 +22829,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderFillList.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21282,11 +22855,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_GetOrderFillList.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_GetOrderFillList.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21309,7 +22882,7 @@
                 this.filterStatusList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21336,9 +22909,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderList.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21346,11 +22923,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.filterConditions = $root.Trd_Common.TrdFilterConditions.decode(r, r.uint32());
+                            m.filterConditions = $root.Trd_Common.TrdFilterConditions.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -21369,7 +22946,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21385,7 +22962,7 @@
                 this.orderList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21404,9 +22981,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderList.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21414,17 +22995,17 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             if (!(m.orderList && m.orderList.length))
                                 m.orderList = [];
-                            m.orderList.push($root.Trd_Common.Order.decode(r, r.uint32()));
+                            m.orderList.push($root.Trd_Common.Order.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21439,7 +23020,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21453,9 +23034,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderList.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21463,11 +23048,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_GetOrderList.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_GetOrderList.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21482,7 +23067,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21505,9 +23090,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetOrderList.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21527,11 +23116,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_GetOrderList.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_GetOrderList.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21553,7 +23142,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21563,6 +23152,7 @@
             C2S.prototype.filterPLRatioMax = 0;
             C2S.prototype.refreshCache = false;
             C2S.prototype.assetCategory = 0;
+            C2S.prototype.currency = 0;
     
             C2S.encode = function encode(m, w) {
                 if (!w)
@@ -21579,12 +23169,18 @@
                     w.uint32(40).bool(m.refreshCache);
                 if (m.assetCategory != null && Object.hasOwnProperty.call(m, "assetCategory"))
                     w.uint32(48).int32(m.assetCategory);
+                if (m.currency != null && Object.hasOwnProperty.call(m, "currency"))
+                    w.uint32(56).int32(m.currency);
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetPositionList.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21592,11 +23188,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.filterConditions = $root.Trd_Common.TrdFilterConditions.decode(r, r.uint32());
+                            m.filterConditions = $root.Trd_Common.TrdFilterConditions.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -21615,8 +23211,12 @@
                             m.assetCategory = r.int32();
                             break;
                         }
+                    case 7: {
+                            m.currency = r.int32();
+                            break;
+                        }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21632,7 +23232,7 @@
                 this.positionList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21651,9 +23251,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetPositionList.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21661,17 +23265,17 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
                             if (!(m.positionList && m.positionList.length))
                                 m.positionList = [];
-                            m.positionList.push($root.Trd_Common.Position.decode(r, r.uint32()));
+                            m.positionList.push($root.Trd_Common.Position.decode(r, r.uint32(), undefined, n + 1));
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21686,7 +23290,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21700,9 +23304,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetPositionList.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21710,11 +23318,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_GetPositionList.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_GetPositionList.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21729,7 +23337,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21752,9 +23360,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_GetPositionList.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21774,11 +23386,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_GetPositionList.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_GetPositionList.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21800,7 +23412,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21856,9 +23468,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_ModifyOrder.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21866,11 +23482,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.packetID = $root.Common.PacketID.decode(r, r.uint32());
+                            m.packetID = $root.Common.PacketID.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -21926,7 +23542,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21941,7 +23557,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -21961,9 +23577,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_ModifyOrder.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -21971,7 +23591,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -21983,7 +23603,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -21998,7 +23618,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22012,9 +23632,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_ModifyOrder.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22022,11 +23646,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_ModifyOrder.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_ModifyOrder.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22041,7 +23665,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22064,9 +23688,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_ModifyOrder.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22086,11 +23714,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_ModifyOrder.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_ModifyOrder.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22112,7 +23740,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22180,9 +23808,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_PlaceOrder.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22190,11 +23822,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.packetID = $root.Common.PacketID.decode(r, r.uint32());
+                            m.packetID = $root.Common.PacketID.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 3: {
@@ -22266,7 +23898,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22281,7 +23913,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22301,9 +23933,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_PlaceOrder.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22311,7 +23947,7 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
@@ -22323,7 +23959,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22338,7 +23974,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22352,9 +23988,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_PlaceOrder.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22362,11 +24002,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_PlaceOrder.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_PlaceOrder.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22381,7 +24021,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22404,9 +24044,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_PlaceOrder.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22426,11 +24070,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_PlaceOrder.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_PlaceOrder.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22453,7 +24097,7 @@
                 this.accIDList = [];
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22471,9 +24115,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_SubAccPush.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22492,7 +24140,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22507,7 +24155,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22517,9 +24165,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_SubAccPush.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22527,7 +24179,7 @@
                         break;
                     switch (t >>> 3) {
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22542,7 +24194,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22556,9 +24208,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_SubAccPush.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22566,11 +24222,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_SubAccPush.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_SubAccPush.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22585,7 +24241,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22608,9 +24264,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_SubAccPush.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22630,11 +24290,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_SubAccPush.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_SubAccPush.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22656,7 +24316,7 @@
             function C2S(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22676,9 +24336,13 @@
                 return w;
             };
     
-            C2S.decode = function decode(r, l, e) {
+            C2S.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_UnlockTrade.C2S();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22698,7 +24362,7 @@
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22713,7 +24377,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22723,9 +24387,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_UnlockTrade.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22733,7 +24401,7 @@
                         break;
                     switch (t >>> 3) {
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22748,7 +24416,7 @@
             function Request(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22762,9 +24430,13 @@
                 return w;
             };
     
-            Request.decode = function decode(r, l, e) {
+            Request.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_UnlockTrade.Request();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22772,11 +24444,11 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.c2s = $root.Trd_UnlockTrade.C2S.decode(r, r.uint32());
+                            m.c2s = $root.Trd_UnlockTrade.C2S.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22791,7 +24463,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22814,9 +24486,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_UnlockTrade.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22836,11 +24512,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_UnlockTrade.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_UnlockTrade.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22862,7 +24538,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22879,9 +24555,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_UpdateOrder.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22889,15 +24569,15 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.order = $root.Trd_Common.Order.decode(r, r.uint32());
+                            m.order = $root.Trd_Common.Order.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22912,7 +24592,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -22935,9 +24615,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_UpdateOrder.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -22957,11 +24641,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_UpdateOrder.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_UpdateOrder.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -22983,7 +24667,7 @@
             function S2C(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -23000,9 +24684,13 @@
                 return w;
             };
     
-            S2C.decode = function decode(r, l, e) {
+            S2C.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_UpdateOrderFill.S2C();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -23010,15 +24698,15 @@
                         break;
                     switch (t >>> 3) {
                     case 1: {
-                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32());
+                            m.header = $root.Trd_Common.TrdHeader.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     case 2: {
-                            m.orderFill = $root.Trd_Common.OrderFill.decode(r, r.uint32());
+                            m.orderFill = $root.Trd_Common.OrderFill.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }
@@ -23033,7 +24721,7 @@
             function Response(p) {
                 if (p)
                     for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
+                        if (p[ks[i]] != null && ks[i] !== "__proto__")
                             this[ks[i]] = p[ks[i]];
             }
     
@@ -23056,9 +24744,13 @@
                 return w;
             };
     
-            Response.decode = function decode(r, l, e) {
+            Response.decode = function decode(r, l, e, n) {
                 if (!(r instanceof $Reader))
                     r = $Reader.create(r);
+                if (n === undefined)
+                    n = 0;
+                if (n > $Reader.recursionLimit)
+                    throw Error("maximum nesting depth exceeded");
                 var c = l === undefined ? r.len : r.pos + l, m = new $root.Trd_UpdateOrderFill.Response();
                 while (r.pos < c) {
                     var t = r.uint32();
@@ -23078,11 +24770,11 @@
                             break;
                         }
                     case 4: {
-                            m.s2c = $root.Trd_UpdateOrderFill.S2C.decode(r, r.uint32());
+                            m.s2c = $root.Trd_UpdateOrderFill.S2C.decode(r, r.uint32(), undefined, n + 1);
                             break;
                         }
                     default:
-                        r.skipType(t & 7);
+                        r.skipType(t & 7, n);
                         break;
                     }
                 }

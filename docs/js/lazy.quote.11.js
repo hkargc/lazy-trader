@@ -41,6 +41,7 @@ _this.db = null; //Dexie存储器
 _this.wss = {};
 _this.NEW = {}; //服务端返回的最新数据合并而成的截面
 _this.task = new Array();
+_this.ISSYSTEM = false; //该连接是否包含资讯推送
 /**
  * 验证
  * @returns 
@@ -395,16 +396,19 @@ _this._open = function() {
 			for (let k in _this.NEW["notify"]) {
 				let a = _this.NEW["notify"][k];
 				delete _this.NEW["notify"][k];
-				logger(json_encode(a));
+				
+				let ISSYSTEM = in_array(a.level, ['SYSTEM']) ? true : false; //是否资讯推送
+				ISSYSTEM && (_this.ISSYSTEM = ISSYSTEM);
+				ISSYSTEM || logger(json_encode(a));
 				_this.post({ //模拟后端推送消息
 					proto: 1003,
 					serialNo: 0
 				}, {
 					s2c: {
-						type: in_array(a.level, ['SYSTEM']) ? -1 : -2,
+						type: ISSYSTEM ? -1 : -2,
 						event: {
-							eventType: in_array(a.level, ['SYSTEM']) ? -1 : -2,
-							desc: in_array(a.level, ['SYSTEM']) ? a['content'] : json_encode({
+							eventType: ISSYSTEM ? -1 : -2,
+							desc: ISSYSTEM ? a['content'] : json_encode({
 								"desc": a['content'],
 								"news": [],
 								"gaps": [],
@@ -706,7 +710,7 @@ _this.task[1004] = function(m) {
 	_this._send({
 		"aid": "peek_message"
 	});
-	_this.post({ //模拟后端推送消息
+	_this.ISSYSTEM || _this.post({ //模拟后端推送消息
 		proto: 1003,
 		serialNo: 0
 	}, {
