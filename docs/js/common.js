@@ -1371,6 +1371,16 @@ function calcRemark(o) {
 	if (empty(G.isWindow)) { //非可视窗口
 		return true;
 	}
+	let remark = 0; //乘以1为强制转数字
+	if (in_array(o.trdSide, [4])) { //格式化到标准价位
+		remark = gear_down(o.remark * 1, 0, o.code);
+	}
+	if (in_array(o.trdSide, [2])) { //格式化到标准价位
+		remark = gear_up(o.remark * 1, 0, o.code);
+	}
+	if(empty(remark)){ //没有计算到成本价:比如其他客户端下的单
+		return o.price;
+	}
 	let step = 1; //默认一个点作为手续费
 	let minVar = o['minVar'] * o['contractSize'] * 1; //每档价值
 	if (minVar) {
@@ -1384,7 +1394,7 @@ function calcRemark(o) {
 	if (in_array(o.trdSide, [4])) { //沽出
 		f *= -1;
 	}
-	return o.remark * 1 + f; //乘以1为强制转数字
+	return remark + f;
 }
 /**
  * 根据订单信息生成水平线[订单线或成本价线]
