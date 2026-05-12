@@ -188,7 +188,7 @@ function do_stock(code) {
 					}
 				}
 			}
-			if (in_array(a['orderStatus'], [5, 10]) && tickers) { //查逐笔
+			if (in_array(a['orderStatus'], [5, 10]) && tickers.length) { //查逐笔
 				for (let k in tickers) {
 					let t = tickers[k];
 					if (t['timestamp'] < a['updateTimestamp']) { //比订单还早的数据
@@ -294,7 +294,7 @@ function do_stock(code) {
 					}
 				}
 			}
-			if (in_array(a['orderStatus'], [5, 10]) && tickers) { //查逐笔
+			if (in_array(a['orderStatus'], [5, 10]) && tickers.length) { //查逐笔
 				for (let k in tickers) {
 					let t = tickers[k];
 					if (t['timestamp'] < a['updateTimestamp']) { //比订单还早的数据
@@ -1316,7 +1316,18 @@ _this.task[3013] = function(m) {
 			'retMsg': '错误的包体!'
 		});
 	}
-	
+	if(is_array(m.c2s.s2c['orderBookBidList']) !== true){
+		return _this.post(m, {
+			'retType': -1,
+			'retMsg': '错误的包体!'
+		});
+	}
+	if(is_array(m.c2s.s2c['orderBookAskList']) !== true){
+		return _this.post(m, {
+			'retType': -1,
+			'retMsg': '错误的包体!'
+		});
+	}
 	let at = intval(m.c2s.s2c['svrRecvTimeBidTimestamp']);
 	let bt = intval(m.c2s.s2c['svrRecvTimeAskTimestamp']);
 
@@ -1349,6 +1360,7 @@ _this.task[3013] = function(m) {
 	}
 	_this.bookers[code] = m.c2s.s2c;
 	if (in_array(_this.tmode, [2]) && do_stock(code)) { //1以实时报价进行成交;2以买买盘和逐笔进行成交
+	
 	}
 };
 /**
@@ -1383,6 +1395,7 @@ _this.task[3005] = function(m) {
 		_this.stocks[code]['curPrice'] = o['curPrice'];
 		_this.stocks[code]['updateTimestamp'] = o['updateTimestamp'] || time();
 		if (in_array(_this.tmode, [1]) && do_stock(code)) { //1以实时报价进行成交;2以买买盘和逐笔进行成交
+			
 		}
 	}
 };
