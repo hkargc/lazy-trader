@@ -1722,10 +1722,10 @@ function calcPrice(price, trdSide) {
 		if (annotation.getType() != 'horizontal-line') {
 			continue;
 		}
-		o = G.orders[annotation.zIndex()];
-		if (empty(o)) {
+		if(empty(G.orders[annotation.zIndex()])){ //可能是街货图上的
 			continue;
 		}
+		o = G.orders[annotation.zIndex()];
 		if (o.trdSide != trdSide) {
 			continue;
 		}
