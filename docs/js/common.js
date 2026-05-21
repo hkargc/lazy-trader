@@ -719,19 +719,10 @@ function HKD(n) {
  * @returns {unresolved}
  */
 function l2s(o) {
-	if (typeof(o) != 'object') {
-		return o;
+	if (is_object(o) && isset(o.low) && isset(o.high) && isset(o.unsigned)) {
+		return Long.fromBits(o.low, o.high, o.unsigned).toString();
 	}
-	if (o.low == undefined) {
-		return o;
-	}
-	if (o.high == undefined) {
-		return o;
-	}
-	if (o.unsigned == undefined) {
-		return o;
-	}
-	return Long.fromBits(o.low, o.high, o.unsigned).toString();
+	return o;
 }
 /**
  * 生成从1开始的唯一ID[由于订单ID等为Long类型不便处理]
@@ -1124,7 +1115,7 @@ function trd_show(trigger) {
 			s += '<td>' + format(a['price'], (a['secType'] == 10) ? 0 : 3) + '</td>';
 		}
 		s += '<td>' + bytes(a['qty']) + '</td>';
-		s += '<td>' + bytes(a['fillQty']) + '@' + format(a['fillAvgPrice'], 3) + '</td>';
+		s += '<td>' + bytes(a['fillQty']) + '@' + format(floatval(a['fillAvgPrice']), 3) + '</td>';
 		if (in_array(a['orderStatus'], [0, 1, 2, 5, 10])) { //待成交的单可以修改状态
 			s += '<td><a href="javascript:trd_modify(\'' + a['id'] + '\', 3)">失效</a></td><td><a href="javascript:trd_modify(\'' + a['id'] + '\', 2)">撤单</a></td>';
 		} else if (in_array(a['orderStatus'], [22])) {
@@ -1182,7 +1173,7 @@ function trd_show(trigger) {
 			s += '<td data-qty="' + a['canSellQty'] + '">' + bytes(a['canSellQty']) + '</td>';
 			s += '<td>' + format(a['costPrice'], 4) + '</td>';
 			s += '<td>' + format(a['val'], 2) + '</td>';
-			s += '<td style="color:' + (f == 1 ? 'red' : (f == -1 ? 'green' : '')) + '">' + (f == 1 ? '+' : '') + sprintf('%.2f', a['plRatio'] * 100) + '%</td>';
+			s += '<td style="color:' + (f == 1 ? 'red' : (f == -1 ? 'green' : '')) + '">' + (f == 1 ? '+' : '') + sprintf('%.2f', floatval(a['plRatio']) * 100) + '%</td>';
 			if (O.pc) {
 				s += '<td style="color:' + (f == 1 ? 'red' : (f == -1 ? 'green' : '')) + '">' + (f == 1 ? '+' : '') + format(a['plVal'], 2) + '</td>';
 			}
