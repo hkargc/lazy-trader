@@ -50,7 +50,7 @@ function get_headers() {
 	return {
 		"Authorization": "Bearer " + Q.access_token,
 		"Accept": "application/json",
-		"User-Agent": "tqsdk-python 3.9.6"
+		"User-Agent": "tqsdk-python 3.9.9"
 	};
 }
 /**
@@ -1307,7 +1307,7 @@ function ins_query(params) {
 	
 	let params = { //这份配置是获取所有线上可交易期货
 		"class": ["FUTURE"],
-		"exchange_id": [],
+		"exchange_id" => ["CFFEX", "SHFE", "DCE", "CZCE", "INE", "SSE", "SZSE", "GFEX"],
 		"expired": false
 	};
 	**/
