@@ -140,19 +140,26 @@ function do_stock(code) {
 	if (empty(_this.w2o[code])) {
 		return false;
 	}
+	let msgs = {};
 	let now = time();
+	
 	let o = _this.bookers[code]; //摆盘
+	let fAsk = o && o['orderBookAskList'] ? array_first(o['orderBookAskList']) : false; //卖一 The first of orderBookAskList
+	let lAsk = o && o['orderBookAskList'] ? array_last(o['orderBookAskList']) : false;
+	let fBid = o && o['orderBookBidList'] ? array_first(o['orderBookBidList']) : false; //买一
+	let lBid = o && o['orderBookBidList'] ? array_last(o['orderBookBidList']) : false;
+	
 	let stock = array_merge({
 		curPrice: 0,
 		updateTimestamp: now
 	}, _this.stocks[code]);
-	let msgs = {};
+
 	for (let orderIDEx in _this.w2o[code]) {
 		orderIDEx = intval(orderIDEx);
 		let a = _this.orders[orderIDEx];
 		let b = []; //更改了哪些字段
 		if (in_array(a['trdSide'], [1, 4])) { //买入,沽出
-			if (o && o['orderBookAskList'][0]['price'] && (o['orderBookAskList'][0]['price'] <= a['price']) && (o['svrRecvTime'] >= a['updateTimestamp'])) { //大于卖一,则从卖一开始逐档成交
+			if (fAsk && (fAsk['price'] <= a['price']) && (o['svrRecvTime'] >= a['updateTimestamp'])) { //大于卖一,则从卖一开始逐档成交
 				for (let i in o['orderBookAskList']) { //从卖一开始
 					let Ask = o['orderBookAskList'][i];
 					if (Ask['price'] > a['price']) {
@@ -228,7 +235,7 @@ function do_stock(code) {
 					}
 				}
 			}
-			if (in_array(a['orderStatus'], [5, 10]) && o && o['orderBookBidList'][0]['price'] && (a['price'] <= o['orderBookBidList'][0]['price']) && (a['price'] >= o['orderBookBidList'][9]['price'])) { //查看摆盘是否有变化(排队)
+			if (in_array(a['orderStatus'], [5, 10]) && fBid && lBid && (a['price'] <= fBid['price']) && (a['price'] >= lBid['price'])) { //查看摆盘是否有变化(排队)
 				for (let i in o['orderBookBidList']) {
 					let Bid = o['orderBookBidList'][i];
 					if (a['price'] == Bid['price']) {
@@ -258,7 +265,7 @@ function do_stock(code) {
 			}
 		}
 		if (in_array(a['trdSide'], [2, 3])) { //卖出,沽入
-			if (o && o['orderBookBidList'][0]['price'] && (a['price'] <= o['orderBookBidList'][0]['price']) && (o['svrRecvTime'] >= a['updateTimestamp'])) { //小于买一,则从买一开始逐档成交
+			if (fBid && (a['price'] <= fBid['price']) && (o['svrRecvTime'] >= a['updateTimestamp'])) { //小于买一,则从买一开始逐档成交
 				for (let i in o['orderBookBidList']) { //从买一开始
 					let Bid = o['orderBookBidList'][i];
 					if (a['price'] > Bid['price']) {
@@ -334,7 +341,7 @@ function do_stock(code) {
 					}
 				}
 			}
-			if (in_array(a['orderStatus'], [5, 10]) && o && o['orderBookAskList'][0]['price'] && (a['price'] >= o['orderBookAskList'][0]['price']) && (a['price'] <= o['orderBookAskList'][9]['price'])) { //查看摆盘是否有变化(排队)
+			if (in_array(a['orderStatus'], [5, 10]) && fAsk && lAsk && (a['price'] >= fAsk['price']) && (a['price'] <= lAsk['price'])) { //查看摆盘是否有变化(排队)
 				for (let i in o['orderBookAskList']) {
 					let Ask = o['orderBookAskList'][i];
 					if (a['price'] == Ask['price']) {
