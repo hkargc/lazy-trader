@@ -557,6 +557,9 @@ _this._open = function() {
 					orderBookAskList: {}
 				};
 				for (let i = 1; i <= 10; i++) {
+					if(empty(a['bid_price' + i]) || empty(a['ask_price' + i])){ //说明没有这些档位
+						continue;
+					}
 					s2c['orderBookBidList'][i - 1] = {
 						'price': floatval(a['bid_price' + i]),
 						'volume': intval(a['bid_volume' + i])

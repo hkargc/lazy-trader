@@ -17,6 +17,14 @@
  *    - 详情访问: https://www.anychart.com
  * --------------------------------------------------------------------------
  */
+/**
+ * 交易下单与改单涉及金融秩序，超频或超量调用接口将触发各交易所的防范风控。
+ * 
+ * 有好心人汇总了这些防范规则，地址：https://www.founderfu.com/ （路径：“客户服务” -> “交易指南” -> 期货交易规则/申报费标准/手续费标准）
+ * 
+ * 注意事项：
+ * 除上述公示规则外，还需注意未明文公示的行业默认限制（例如：每秒下单上限 6 次）。
+ */
 "use strict";
 const _this = self;
 _this.importScripts("./dexie.min.js");
@@ -42,6 +50,7 @@ _this.wss = {};
 _this.NEW = {}; //服务端返回的最新数据合并而成的截面
 _this.task = new Array();
 _this.qq = new Array(); //用于限频
+_this.STAT = new Array(); //statistic 统计订单数量
 _this.insert_order_list = new Array(); //改单逻辑:先撤单,等待响应,再下新单
 /**
  * 验证
@@ -257,28 +266,42 @@ function get_system_info() {
 	});
 }
 /**
- * 把订单转成兼容富途
+ * 把订单转成兼容富途:这里只拿到当前时段的,并不是夜盘加上日盘的
  * @returns 
  */
 function _orders(filterStatusList) {
 	let orderList = [];
+	_this.STAT = new Array(); //每次都是遍历所有订单(没有考虑性能)
 	if (NEW.trade && NEW.trade[_this.uid] && NEW.trade[_this.uid]["orders"]) {
 		for (let orderIDEx in NEW.trade[_this.uid]["orders"]) {
 			let o = NEW.trade[_this.uid]["orders"][orderIDEx];
+			let code = implode(".", [o["exchange_id"], o["instrument_id"]]);
+			let [prefix, remark, contractSize, hash] = explode('_', o["order_id"]); //提取...
+			
+			if(empty(_this.STAT[code])){ //0总计订单数,1生效中的订单数,2全部成交订单数,3撤单或失败订单数
+				_this.STAT[code] = [0, 0, 0, 0];
+			}
+			_this.STAT[code][0]++;
+			
 			let orderStatus = 5;
 			if (o["status"] == "ALIVE") {
 				orderStatus = 5;
+				_this.STAT[code][1]++;
 			}
 			if (o["status"] == 'FINISHED') { //默认是全部成交
 				orderStatus = 11;
 				if (empty(trim(o["exchange_order_id"]))) { //被拒绝的单
 					orderStatus = 21; //下单失败
+					_this.STAT[code][3]++;
 				} else if (o["volume_left"] == 0) { //全部成交
 					orderStatus = 11;
+					_this.STAT[code][2]++;
 				} else if (o["volume_left"] == o["volume_orign"]) { //已撤单:全部
 					orderStatus = 15;
+					_this.STAT[code][3]++;
 				} else if (o["volume_left"] < o["volume_orign"]) { //部分完成,剩余部分已撤单
 					orderStatus = 14;
+					_this.STAT[code][3]++;
 				}
 			}
 			let trdSide = 0;
@@ -301,8 +324,6 @@ function _orders(filterStatusList) {
 			if (count(filterStatusList) && !in_array(orderStatus, filterStatusList)) { //要过滤
 				continue;
 			}
-			let code = implode(".", [o["exchange_id"], o["instrument_id"]]);
-			let [prefix, remark, contractSize, hash] = explode('_', o["order_id"]); //提取...
 			orderList.push({
 				orderIDEx: o["order_id"],
 				lastErrMsg: in_array(orderStatus, [21]) ? o["last_msg"] : "", //下单失败:交易所没有接受,比如保证金不足
@@ -354,11 +375,17 @@ function _fills() {
 				name: code,
 				qty: o["volume"],
 				price: o["price"],
-				//commissio: o["commissio"], //手续费
+				commissio: o["commissio"], //手续费
 				createTimestamp: o["trade_date_time"] / 1000000000,
-				updateTimestamp: o["trade_date_time"] / 1000000000
+				updateTimestamp: o["trade_date_time"] / 1000000000,
+				trdMarket: 5, //以下为兼容:历史成交接口要用
+				uid: _this.uid,
+				orderStatus: 11,
+				fillAvgPrice: o["price"],
+				fillQty: o["volume"]
 			});
 		}
+		_this.db.table("lazy_orders").bulkPut(orderFillList);
 	}
 	return orderFillList;
 }
@@ -725,8 +752,18 @@ _this.task[2222] = function(m) {
 	let s2c = {};
 	s2c.header = m.c2s.header;
 	s2c.orderFillList = [];
-	return _this.post(m, {
-		s2c: s2c
+	_this.db.table("lazy_orders").where("uid").equals(_this.uid).and(function(o) {
+		return (o.trdMarket == m.c2s.header['trdMarket']) && in_array(o.orderStatus, [11, 14]) && (o.updateTimestamp >= beginTime) && (o.updateTimestamp < endTime);
+	}).each(function(o) {
+		s2c.orderFillList.push(array_merge(o, {
+			'fillIDEx': o['orderIDEx'],
+			'price': o['fillAvgPrice'],
+			'qty': o['fillQty']
+		}));
+	}).then(function() {
+		return _this.post(m, {
+			s2c: s2c
+		});
 	});
 };
 /**
@@ -1034,6 +1071,18 @@ _this.task[2202] = function(m) {
 			offset = "CLOSETODAY";
 		}
 	}
+	if(_this.STAT[code] && (_this.STAT[code][0] >= 2500)){ //超过4000要收申报费
+		return _this.post(m, {
+			'retType': -1,
+			'retMsg': '订单数超出!'
+		});
+	}
+	if(_this.STAT[code] && (_this.STAT[code][3] >= 250)){ //撤单超过500触发异常交易监管
+		return _this.post(m, {
+			'retType': -1,
+			'retMsg': '撤单数超出!!'
+		});
+	}
 	_this._send({
 		aid: "insert_order",
 		user_id: _this.uid,
@@ -1228,7 +1277,7 @@ _this.task[2101] = function(m) {
 	});
 };
 /**
- * 限制频率(只是仿真,刷新页面就能跳过)
+ * 限制频率(只是仿真,刷新页面就能跳过) 大陆期货6次/秒,没见明文公告,约定俗成?!
  * @param {type} proto
  * @param {type} sec
  * @param {type} cnt
