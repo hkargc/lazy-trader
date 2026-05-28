@@ -218,14 +218,14 @@ function LazyHub() {
 			return false;
 		}
 		let off = false; //是否超出了限频(仅针对当前页面)
-		if (in_array(proto, [2202]) && !_this.limit(proto, 30, 15, 0.02 * 2)) { //下单(30秒15次,间隔0.02秒)
+		if (in_array(proto, [2202]) && !_this.limit(proto, 30, 15, 0.02 * 10)) { //下单(30秒15次,间隔0.02秒) 这里设置为0.2秒:5次/秒
 			off = true;
 		}
-		if (in_array(proto, [2205]) && !_this.limit(proto, 30, 20, 0.04 * 2)) { //改单(30秒20次,间隔0.04秒)
+		if (in_array(proto, [2205]) && !_this.limit(proto, 30, 20, 0.04 * 5)) { //改单(30秒20次,间隔0.04秒)
 			off = true;
 		}
 		if (off) {
-			window.setTimeout(_this.send, 10, proto, c2s, n, cb, true);
+			window.setTimeout(_this.send, 100, proto, c2s, n, cb, true);
 			false && arguments[4] && _this.callback({
 				proto: 0,
 				serialNo: 0,

@@ -1304,7 +1304,7 @@ function ModifyOrder(modifyOrderOp, id) {
 	if (in_array(modifyOrderOp, [2, 3, 4]) == false) {
 		return false;
 	}
-	let ids = [];
+	let list = [];
 	let forAll = boolval(G.ctrlKey); //按住CTRL键则为改变所有订单
 	let annotation = getSelectedAnnotation(id); //选中的订单
 	if (empty(annotation) && empty(forAll)) {
@@ -1321,7 +1321,7 @@ function ModifyOrder(modifyOrderOp, id) {
 		if ((modifyOrderOp == 4) && (o.orderStatus != 22)) { //
 			return false;
 		}
-		ids.push(o.id);
+		list[o.id] = o;
 	}
 	let count = G.ctrl.getAnnotationsCount();
 	for (let index = count - 1; index >= 0; index--) {
@@ -1345,11 +1345,13 @@ function ModifyOrder(modifyOrderOp, id) {
 		if ((modifyOrderOp == 4) && (o.orderStatus != 22)) { //
 			continue;
 		}
-		ids.push(o.id);
+		list[o.id] = o;
 	}
-	ids = array_unique(ids);
-	for (let i in ids) {
-		let o = G.orders[ids[i]];
+	list.sort(function(a, b) { //离当前价最近的最先执行
+		return abs(a['price'] - Q['curPrice']) - abs(b['price'] - Q['curPrice']);
+	});
+	for (let id in list) {
+		let o = list[id];
 		lazy.Trd_ModifyOrder(o["orderIDEx"], modifyOrderOp, o['code'], o['trdSide'], o['qty'], o['price'], o['remark']);
 	}
 }

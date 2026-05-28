@@ -277,12 +277,12 @@ function _orders(filterStatusList) {
 			let o = NEW.trade[_this.uid]["orders"][orderIDEx];
 			let code = implode(".", [o["exchange_id"], o["instrument_id"]]);
 			let [prefix, remark, contractSize, hash] = explode('_', o["order_id"]); //提取...
-			
-			if(empty(_this.STAT[code])){ //0总计订单数,1生效中的订单数,2全部成交订单数,3撤单或失败订单数
+
+			if (empty(_this.STAT[code])) { //0总计订单数,1生效中的订单数,2全部成交订单数,3撤单或失败订单数
 				_this.STAT[code] = [0, 0, 0, 0];
 			}
 			_this.STAT[code][0]++;
-			
+
 			let orderStatus = 5;
 			if (o["status"] == "ALIVE") {
 				orderStatus = 5;
@@ -367,15 +367,15 @@ function _fills() {
 				trdSide = 4;
 			}
 			let code = implode(".", [o["exchange_id"], o["instrument_id"]]);
+			let IDEx = implode("|", [o["order_id"], trim(o["exchange_trade_id"])]);
 			orderFillList.push({
-				fillIDEx: o["trade_id"],
-				orderIDEx: o["order_id"],
+				fillIDEx: IDEx,
+				orderIDEx: IDEx,
 				trdSide: trdSide,
 				code: code,
 				name: code,
 				qty: o["volume"],
 				price: o["price"],
-				commissio: o["commissio"], //手续费
 				createTimestamp: o["trade_date_time"] / 1000000000,
 				updateTimestamp: o["trade_date_time"] / 1000000000,
 				trdMarket: 5, //以下为兼容:历史成交接口要用
@@ -483,7 +483,7 @@ _this._open = function() {
 				let a = NEW["notify"][k];
 				delete NEW["notify"][k];
 				logger(json_encode(a));
-				_this.post({ //模拟后端推送消息
+				in_array(a["code"], [321, 328, 329, 331, 336]) || _this.post({ //模拟后端推送消息
 					proto: 1003,
 					serialNo: 0
 				}, {
@@ -586,7 +586,7 @@ _this.task[-1001] = function(m) {
 			'retMsg': '初始化重复!'
 		});
 	}
-	if(Q.isAnonymous){
+	if (Q.isAnonymous) {
 		return _this.post(m, {
 			'retType': -1,
 			'retMsg': '无中继服务!'
@@ -1071,13 +1071,13 @@ _this.task[2202] = function(m) {
 			offset = "CLOSETODAY";
 		}
 	}
-	if(_this.STAT[code] && (_this.STAT[code][0] >= 2500)){ //超过4000要收申报费
+	if (_this.STAT[code] && (_this.STAT[code][0] >= 2500)) { //超过4000要收申报费
 		return _this.post(m, {
 			'retType': -1,
 			'retMsg': '订单数超出!'
 		});
 	}
-	if(_this.STAT[code] && (_this.STAT[code][3] >= 250)){ //撤单超过500触发异常交易监管
+	if (_this.STAT[code] && (_this.STAT[code][3] >= 250)) { //撤单超过500触发异常交易监管
 		return _this.post(m, {
 			'retType': -1,
 			'retMsg': '撤单数超出!!'
