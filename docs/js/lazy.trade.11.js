@@ -367,10 +367,10 @@ function _fills() {
 				trdSide = 4;
 			}
 			let code = implode(".", [o["exchange_id"], o["instrument_id"]]);
-			let IDEx = implode("|", [o["order_id"], trim(o["exchange_trade_id"])]);
+			let orderIDEx = implode("|", [o["order_id"], trim(o["exchange_trade_id"])]);
 			orderFillList.push({
-				fillIDEx: IDEx,
-				orderIDEx: IDEx,
+				fillIDEx: fillIDEx, //这里必须保持原样
+				orderIDEx: orderIDEx,
 				trdSide: trdSide,
 				code: code,
 				name: code,
