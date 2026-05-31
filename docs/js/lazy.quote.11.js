@@ -99,7 +99,7 @@ function get_auth_token() {
 			//m.session_state
 			//m.token_type
 			//let claims = jose.decodeJwt(Q.access_token);
-			//logger(claims)
+			//console.log(claims)
 			return _this.db.table("lazy_kvs").put({
 				type: 11,
 				key: key,
@@ -107,7 +107,7 @@ function get_auth_token() {
 				expire: time() + 1 * 60 * 60
 			});
 		}
-		logger(m); //有可能账户或密码错误
+		console.log(m); //有可能账户或密码错误
 	}).catch(function(e) {
 		console.log(e);
 	}).finally(function() {
@@ -153,9 +153,9 @@ function get_auth_token2() {
 				expire: time() + 1 * 60 * 60
 			});
 		}
-		logger(m); //有可能账户或密码错误
+		console.log(m); //有可能账户或密码错误
 	}).catch(function(e) {
-		//logger(e);
+		//console.log(e);
 	}).finally(function() {
 		get_md_url();
 	});
@@ -181,9 +181,9 @@ function get_auth_grant() {
 			return response.json();
 		}
 	}).then(function(m) {
-		//logger(m);
+		//console.log(m);
 	}).catch(function(e) {
-		//logger(e);
+		//console.log(e);
 	}).finally(function() {});
 }
 /**
@@ -231,7 +231,7 @@ function get_md_url() {
 			});
 		}
 	}).catch(function(e) {
-		//logger(e);
+		//console.log(e);
 	}).finally(function() {
 		_this._open();
 	});
@@ -277,7 +277,7 @@ function get_td_url() {
 			}
 		}
 	}).catch(function(e) {
-		//logger(e);
+		//console.log(e);
 	}).finally(function() {
 		_this._open();
 	});
@@ -310,9 +310,9 @@ function get_settlement_data(symbols, days, start_date) {
 			return response.json();
 		}
 	}).then(function(m) {
-		logger(m);
+		console.log(m);
 	}).catch(function(e) {
-		//logger(e);
+		//console.log(e);
 	}).finally(function() {});
 }
 _this._send = function(pack) {
@@ -399,7 +399,7 @@ _this._open = function() {
 				
 				let ISSYSTEM = in_array(a.level, ['SYSTEM']) ? true : false; //是否资讯推送
 				ISSYSTEM && (_this.ISSYSTEM = ISSYSTEM);
-				ISSYSTEM || logger(json_encode(a));
+				ISSYSTEM || console.log(structuredClone(a));
 				_this.post({ //模拟后端推送消息
 					proto: 1003,
 					serialNo: 0
@@ -642,9 +642,9 @@ _this._open = function() {
 		}
 		if (diff["mdhis_more_data"] && empty(NEW.mdhis_more_data)) { //md行情,td交易,改成 md has_more_data 比较好理解:是否还有更多行情数据,比如取10000根K线,会分几次发送,第一次发送的包会把这个值设为true,最后一次设为false
 			//所需数据已经完整发完,本项目采用charts里面的ready字段
-			//logger(NEW.mdhis_more_data)
+			//console.log(NEW.mdhis_more_data)
 		}
-		//logger(NEW)
+		//console.log(NEW)
 	});
 	_this.wss.addEventListener('error', function(e) {
 		_this.post({
@@ -1101,15 +1101,16 @@ _this.task[3103] = function(m) {
 				}
 			})
 		}).then(function(response) {
-			if (response.status == 200) {
-				return response.text();
-			}
-		}).then(function(csvString) {
-			if (empty(csvString)) {
-				return false;
+			let status = response.status;
+			return response.text().then(function(body) {
+				return [status, body];
+			});
+		}).then(function([status, body]) {
+			if(status != 200){
+				return console.log(body);
 			}
 			let klList = [];
-			Papa.parse(csvString, {
+			Papa.parse(body, {
 				header: true, //将第一行作为对象键名
 				dynamicTyping: true, //自动将数字/布尔值转换为对应类型
 				skipEmptyLines: "greedy", //跳过空行或只有空白字符的行
@@ -1140,7 +1141,7 @@ _this.task[3103] = function(m) {
 				}
 			});
 		}).catch(function(e) {
-			//logger(e)
+			//console.log(e)
 		}).finally(function() {});
 	}
 	for (let chart_id in NEW.charts) { //确保只调用一次

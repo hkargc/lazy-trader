@@ -104,7 +104,7 @@ function get_auth_token() {
 			//m.session_state
 			//m.token_type
 			//let claims = jose.decodeJwt(m.access_token);
-			//logger(claims)
+			//console.log(claims)
 			return _this.db.table("lazy_kvs").put({
 				type: 11,
 				key: key,
@@ -112,9 +112,9 @@ function get_auth_token() {
 				expire: time() + 1 * 60 * 60
 			});
 		}
-		logger(m); //有可能账户或密码错误
+		console.log(m); //有可能账户或密码错误
 	}).catch(function(e) {
-		//logger(e);
+		//console.log(e);
 	}).finally(function() {
 		get_td_url();
 	});
@@ -140,9 +140,9 @@ function get_auth_grant() {
 			return response.json();
 		}
 	}).then(function(m) {
-		//logger(m);
+		//console.log(m);
 	}).catch(function(e) {
-		//logger(e);
+		//console.log(e);
 	}).finally(function() {});
 }
 /**
@@ -186,7 +186,7 @@ function get_md_url() {
 			});
 		}
 	}).catch(function(e) {
-		//logger(e);
+		//console.log(e);
 	}).finally(function() {
 		_this._open();
 	});
@@ -232,7 +232,7 @@ function get_td_url() {
 			}
 		}
 	}).catch(function(e) {
-		//logger(e);
+		//console.log(e);
 	}).finally(function() {
 		get_system_info();
 	});
@@ -260,7 +260,7 @@ function get_system_info() {
 			_this.Q.client_system_info = m.client_system_info;
 		}
 	}).catch(function(e) {
-		//logger(e);
+		//console.log(e);
 	}).finally(function() {
 		_this._open();
 	});
@@ -482,7 +482,7 @@ _this._open = function() {
 			for (let k in NEW["notify"]) {
 				let a = NEW["notify"][k];
 				delete NEW["notify"][k];
-				logger(json_encode(a));
+				console.log(structuredClone(a));
 				in_array(a["code"], [321, 328, 329, 331, 336]) || _this.post({ //模拟后端推送消息
 					proto: 1003,
 					serialNo: 0

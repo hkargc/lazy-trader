@@ -206,7 +206,7 @@ $GLOBALS.TrdSide = {
  */
 function alert(message, options) {
 	if (empty(G.isWindow)) { //非可视窗口:比如在Worker中
-		logger(message);
+		console.log(message);
 		return true;
 	}
 	options = Object.assign({}, options);

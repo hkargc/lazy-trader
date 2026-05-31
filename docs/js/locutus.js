@@ -39,17 +39,6 @@ const $_COOKIE = (function() {
 		return acc;
 	}), {});
 })();
-
-function logger(...args) {
-	for (let i = 0; i < args.length; i++) {
-		try {
-			if (args[i] !== null && typeof args[i] === 'object') {
-				args[i] = structuredClone(args[i]);
-			}
-		} catch (e) {}
-		console.log(args[i]);
-	}
-}
 (function(global) {
 	const findPointerIndex = (pointers, target) => {
 		for (let index = 0; index < pointers.length; index += 1) {
